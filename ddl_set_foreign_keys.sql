@@ -2,6 +2,9 @@
 ALTER TABLE CentralOffice
 ADD FOREIGN KEY (ChainName) REFERENCES HotelChain(ChainName);
 
+ALTER TABLE Hotel
+ADD FOREIGN KEY (ChainName) REFERENCES HotelChain(ChainName);
+
 ALTER TABLE Room
 ADD FOREIGN KEY (HotelID) REFERENCES Hotel(HotelID);
 
