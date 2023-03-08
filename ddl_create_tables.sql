@@ -21,7 +21,8 @@ CREATE TABLE Hotel (
 	HotelAddress TEXT NOT NULL,
 	Stars SMALLINT NOT NULL CHECK (Stars <= 5) CHECK (Stars >= 0),
 	PhoneNumbers TEXT[],
-	ContactEmails TEXT[]);
+	ContactEmails TEXT[],
+	ChainName TEXT NOT NULL);
 
 -- Command for creating rooms table
 CREATE TABLE Room (
