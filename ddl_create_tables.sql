@@ -3,50 +3,50 @@ SET SEARCH_PATH = 'ehotels_db';
 
 -- Command for creating hotel chain table
 CREATE TABLE HotelChain (
-    ChainName CHAR NOT NULL PRIMARY KEY,
+    ChainName TEXT NOT NULL PRIMARY KEY,
 	NumberHotels INT NOT NULL CHECK (NumberHotels > 0),
-	PhoneNumbers CHAR[],
-	ContactEmails CHAR[]);
+	PhoneNumbers TEXT[],
+	ContactEmails TEXT[]);
 
 -- Command for creating central office
 CREATE TABLE CentralOffice (
     OfficeID INT NOT NULL PRIMARY KEY,
-	OfficeAddress CHAR NOT NULL,
-	ChainName CHAR NOT NULL);
+	OfficeAddress TEXT NOT NULL,
+	ChainName TEXT NOT NULL);
 
 -- Command for creating hotels table
 CREATE TABLE Hotel (
     HotelID INT NOT NULL PRIMARY KEY,
-	HotelName CHAR NOT NULL,
-	HotelAddress CHAR NOT NULL,
+	HotelName TEXT NOT NULL,
+	HotelAddress TEXT NOT NULL,
 	Stars SMALLINT NOT NULL CHECK (Stars <= 5) CHECK (Stars >= 0),
-	PhoneNumbers CHAR[],
-	ContactEmails CHAR[]);
+	PhoneNumbers TEXT[],
+	ContactEmails TEXT[]);
 
 -- Command for creating rooms table
 CREATE TABLE Room (
     RoomNumber INT NOT NULL PRIMARY KEY,
 	Price FLOAT NOT NULL CHECK (Price >= 0),
 	Occupied BOOLEAN NOT NULL,
-	Amenities CHAR[],
+	Amenities TEXT[],
 	Extendable BOOLEAN,
-	View CHAR[],
-	Issues CHAR[],
-	Capacity CHAR[],
+	View TEXT[],
+	Issues TEXT[],
+	Capacity TEXT[],
 	HotelID INT NOT NULL);
 
 -- Command for creating employee table
 CREATE TABLE Employee (
 	EmployeeID INT NOT NULL PRIMARY KEY,
 	SIN SMALLINT NOT NULL,
-	FullName CHAR NOT NULL,
-	EmployeeAddress CHAR NOT NULL,
+	FullName TEXT NOT NULL,
+	EmployeeAddress TEXT NOT NULL,
 	Age SMALLINT CHECK (Age >= 16),
 	HotelID INT NOT NULL);
 
 -- Command for creating position table
 CREATE TABLE Position (
-	Title CHAR NOT NULL PRIMARY KEY,
+	Title TEXT NOT NULL PRIMARY KEY,
 	Salary FLOAT NOT NULL CHECK (Salary > 0),
 	EmployeeID INT NOT NULL);
 
@@ -54,8 +54,8 @@ CREATE TABLE Position (
 CREATE TABLE Customer (
 	EmployeeID INT NOT NULL PRIMARY KEY,
 	SIN SMALLINT NOT NULL,
-	FullName CHAR NOT NULL,
-	CustomerAddress CHAR NOT NULL,
+	FullName TEXT NOT NULL,
+	CustomerAddress TEXT NOT NULL,
 	Age SMALLINT CHECK (Age >= 16),
 	RegistrationDate DATE,
 	CreditCardNumber SMALLINT);
@@ -71,7 +71,7 @@ CREATE TABLE Booking (
 	BookingID INT NOT NULL PRIMARY KEY,
 	StartDate DATE NOT NULL,
 	EndDate DATE NOT NULL,
-	SpecialRequests CHAR[],
+	SpecialRequests TEXT[],
 	HotelID INT NOT NULL,
 	RoomNumber INT NOT NULL);
 
@@ -80,6 +80,6 @@ CREATE TABLE Renting (
 	Renting INT NOT NULL PRIMARY KEY,
 	StartDate DATE NOT NULL,
 	EndDate DATE NOT NULL,
-	SpecialRequests CHAR[],
+	SpecialRequests TEXT[],
 	HotelID INT NOT NULL,
 	RoomNumber INT NOT NULL);
