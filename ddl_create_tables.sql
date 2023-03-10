@@ -31,15 +31,15 @@ CREATE TABLE Room (
 	Occupied BOOLEAN NOT NULL,
 	Amenities TEXT[],
 	Extendable BOOLEAN,
-	View TEXT[],
+	View TEXT NOT NULL,
 	Issues TEXT[],
-	Capacity TEXT[],
+	Capacity INT NOT NULL,
 	HotelID INT NOT NULL);
 
 -- Command for creating employee table
 CREATE TABLE Employee (
 	EmployeeID INT NOT NULL PRIMARY KEY,
-	SIN SMALLINT NOT NULL,
+	SIN INT NOT NULL,
 	FullName TEXT NOT NULL,
 	EmployeeAddress TEXT NOT NULL,
 	Age SMALLINT CHECK (Age >= 16),
