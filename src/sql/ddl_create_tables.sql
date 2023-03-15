@@ -84,7 +84,7 @@ CREATE TABLE Booking (
 
 -- Command for creating renting table
 CREATE TABLE Renting (
-	Renting INT NOT NULL PRIMARY KEY,
+	RentingID INT NOT NULL PRIMARY KEY,
 	StartDate DATE NOT NULL,
 	EndDate DATE NOT NULL,
 	SpecialRequests TEXT[],
