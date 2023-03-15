@@ -64,8 +64,6 @@ CREATE TABLE Customer (
 -- Command for creating archive table
 CREATE TABLE Archive (
 	ArchiveID INT NOT NULL PRIMARY KEY,
-	Number_Rentings INT NOT NULL CHECK (Number_Rentings > 0),
-	Number_Bookings INT NOT NULL CHECK (Number_Bookings > 0),
 	ArchiveType TEXT NOT NULL,
 	StartDate DATE NOT NULL,
 	EndDate DATE NOT NULL,
