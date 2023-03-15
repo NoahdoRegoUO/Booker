@@ -401,12 +401,12 @@ INSERT INTO room(roomnumber, price, occupied, amenities, extendable, view, issue
 INSERT INTO room(roomnumber, price, occupied, amenities, extendable, view, issues, capacity, hotelid) VALUES (212, 106.86, false, ARRAY['Air Conditioning'], false, 'Mountain', ARRAY['None'], 2, 43);    
 INSERT INTO room(roomnumber, price, occupied, amenities, extendable, view, issues, capacity, hotelid) VALUES (213, 146.04, false, ARRAY['Air Conditioning', 'Television'], true, 'Mountain', ARRAY['None'], 3, 43);
 INSERT INTO room(roomnumber, price, occupied, amenities, extendable, view, issues, capacity, hotelid) VALUES (214, 233.7, false, ARRAY['Air Conditioning', 'Television', 'Microwave'], true, 'Sea', ARRAY['None'], 4, 43);
-INSERT INTO room(roomnumber, price, occupied, amenities, extendable, view, issues, capacity, hotelid) VALUES (215, 328.63, false, ARRAY['Air Conditioning', 'Television', 'Microwave', 'Fridge'], true, 'SSea', ARRAY['None'], 5, 43);
+INSERT INTO room(roomnumber, price, occupied, amenities, extendable, view, issues, capacity, hotelid) VALUES (215, 328.63, false, ARRAY['Air Conditioning', 'Television', 'Microwave', 'Fridge'], true, 'Sea', ARRAY['None'], 5, 43);
 INSERT INTO room(roomnumber, price, occupied, amenities, extendable, view, issues, capacity, hotelid) VALUES (216, 98.28, false, ARRAY['None'], false, 'Mountain', ARRAY['None'], 1, 44);
 INSERT INTO room(roomnumber, price, occupied, amenities, extendable, view, issues, capacity, hotelid) VALUES (217, 114.01, false, ARRAY['Air Conditioning'], false, 'Sea', ARRAY['None'], 2, 44);        
 INSERT INTO room(roomnumber, price, occupied, amenities, extendable, view, issues, capacity, hotelid) VALUES (218, 116.65, false, ARRAY['Air Conditioning', 'Television'], true, 'Sea', ARRAY['None'], 3,  44);
 INSERT INTO room(roomnumber, price, occupied, amenities, extendable, view, issues, capacity, hotelid) VALUES (219, 213.71, false, ARRAY['Air Conditioning', 'Television', 'Microwave'], true, 'Sea', ARRAY['None'], 4, 44);
-INSERT INTO room(roomnumber, price, occupied, amenities, extendable, view, issues, capacity, hotelid) VALUES (220, 309.81, false, ARRAY['Air Conditioning', 'Television', 'Microwave', 'Fridge'], true, 'MMountain', ARRAY['Slight Damage'], 5, 44);
+INSERT INTO room(roomnumber, price, occupied, amenities, extendable, view, issues, capacity, hotelid) VALUES (220, 309.81, false, ARRAY['Air Conditioning', 'Television', 'Microwave', 'Fridge'], true, 'Mountain', ARRAY['Slight Damage'], 5, 44);
 
 -- yeah that's a lot of rooms
 

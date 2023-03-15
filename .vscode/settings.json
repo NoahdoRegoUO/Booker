@@ -1,6 +1,7 @@
 {
   "java.project.referencedLibraries": [
     "lib/**/*.jar",
-    "/Users/noahd/dev/uni_projects/e-hotels jar files/postgresql-42.5.4.jar"
+    "/Users/noahd/dev/uni_projects/e-hotels jar files/postgresql-42.5.4.jar",
+    "f:\\School\\UNIVERSITY\\SECOND YEAR\\CSI2132 - Databases 1\\postgresql-42.5.4.jar"
   ]
 }
