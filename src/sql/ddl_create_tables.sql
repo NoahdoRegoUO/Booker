@@ -53,19 +53,23 @@ CREATE TABLE Position (
 
 -- Command for creating customer table
 CREATE TABLE Customer (
-	EmployeeID INT NOT NULL PRIMARY KEY,
-	SIN SMALLINT NOT NULL,
+	CustomerID INT NOT NULL PRIMARY KEY,
+	SIN INT NOT NULL,
 	FullName TEXT NOT NULL,
 	CustomerAddress TEXT NOT NULL,
 	Age SMALLINT CHECK (Age >= 16),
 	RegistrationDate DATE,
-	CreditCardNumber SMALLINT);
+	CreditCardNumber BIGINT);
 
 -- Command for creating archive table
 CREATE TABLE Archive (
-	ArchiveID INT NOT NULL PRIMARY KEY,
-	Number_Rentings INT NOT NULL CHECK (Number_Rentings > 0),
-	Number_Bookings INT NOT NULL CHECK (Number_Bookings > 0));
+    ArchiveID INT NOT NULL PRIMARY KEY,
+    ArchiveType TEXT NOT NULL,
+    StartDate DATE NOT NULL,
+    EndDate DATE NOT NULL,
+    SpecialRequests TEXT[],
+    HotelID INT NOT NULL,
+    RoomNumber INT NOT NULL);
 
 -- Command for creating booking table
 CREATE TABLE Booking (
@@ -78,7 +82,7 @@ CREATE TABLE Booking (
 
 -- Command for creating renting table
 CREATE TABLE Renting (
-	Renting INT NOT NULL PRIMARY KEY,
+	RentingID INT NOT NULL PRIMARY KEY,
 	StartDate DATE NOT NULL,
 	EndDate DATE NOT NULL,
 	SpecialRequests TEXT[],
