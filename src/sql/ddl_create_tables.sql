@@ -65,7 +65,13 @@ CREATE TABLE Customer (
 CREATE TABLE Archive (
 	ArchiveID INT NOT NULL PRIMARY KEY,
 	Number_Rentings INT NOT NULL CHECK (Number_Rentings > 0),
-	Number_Bookings INT NOT NULL CHECK (Number_Bookings > 0));
+	Number_Bookings INT NOT NULL CHECK (Number_Bookings > 0),
+	ArchiveType TEXT NOT NULL,
+	StartDate DATE NOT NULL,
+	EndDate DATE NOT NULL,
+	SpecialRequests TEXT[],
+	HotelID INT NOT NULL,
+	RoomNumber INT NOT NULL);
 
 -- Command for creating booking table
 CREATE TABLE Booking (
