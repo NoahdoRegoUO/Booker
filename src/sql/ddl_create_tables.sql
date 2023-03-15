@@ -53,7 +53,7 @@ CREATE TABLE Position (
 
 -- Command for creating customer table
 CREATE TABLE Customer (
-	EmployeeID INT NOT NULL PRIMARY KEY,
+	CustomerID INT NOT NULL PRIMARY KEY,
 	SIN SMALLINT NOT NULL,
 	FullName TEXT NOT NULL,
 	CustomerAddress TEXT NOT NULL,
