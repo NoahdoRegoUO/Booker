@@ -19,10 +19,6 @@ body{
   margin: 5vh;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
 #sign-in-text {
   color: white;
   font-size: calc(10px + 3vmin);
