@@ -69,7 +69,8 @@ CREATE TABLE Archive (
     EndDate DATE NOT NULL,
     SpecialRequests TEXT[],
     HotelID INT NOT NULL,
-    RoomNumber INT NOT NULL);
+    RoomNumber INT NOT NULL,
+	CustomerID INT NOT NULL);
 
 -- Command for creating booking table
 CREATE TABLE Booking (
@@ -78,7 +79,8 @@ CREATE TABLE Booking (
 	EndDate DATE NOT NULL,
 	SpecialRequests TEXT[],
 	HotelID INT NOT NULL,
-	RoomNumber INT NOT NULL);
+	RoomNumber INT NOT NULL,
+	CustomerID INT NOT NULL);
 
 -- Command for creating renting table
 CREATE TABLE Renting (
@@ -87,4 +89,5 @@ CREATE TABLE Renting (
 	EndDate DATE NOT NULL,
 	SpecialRequests TEXT[],
 	HotelID INT NOT NULL,
-	RoomNumber INT NOT NULL);
+	RoomNumber INT NOT NULL,
+	CustomerID INT NOT NULL);

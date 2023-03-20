@@ -43,11 +43,11 @@ public class DBFunctions {
         }
     }
 
-    public void addArchive(Connection connect, int archiveID, String archiveType, Date startDate, Date endDate, Array specialRequests, int hotelID, int roomNumber) throws SQLException{
+    public void addArchive(Connection connect, int archiveID, String archiveType, Date startDate, Date endDate, Array specialRequests, int hotelID, int roomNumber, int customerID) throws SQLException{
         Statement statement;
         
         try {
-            String query = String.format("INSERT INTO archive VALUES ('%s','%s','%s','%s','%s','%s', '%s');", archiveID, archiveType, startDate, endDate, specialRequests, hotelID, roomNumber);
+            String query = String.format("INSERT INTO archive VALUES ('%s','%s','%s','%s','%s','%s', '%s', '%s');", archiveID, archiveType, startDate, endDate, specialRequests, hotelID, roomNumber, customerID);
             statement = connect.createStatement();
             statement.executeUpdate(query);
             System.out.println("Archive Row Added");
@@ -56,18 +56,18 @@ public class DBFunctions {
         }
     }
 
-    public void addBooking(Connection connect, int bookingID, Date startDate, Date endDate, String[] specialRequests, int hotelID, int roomNumber) throws SQLException{
+    public void addBooking(Connection connect, int bookingID, Date startDate, Date endDate, String[] specialRequests, int hotelID, int roomNumber, int customerID) throws SQLException{
         Statement statement;
 
         Array sr = connect.createArrayOf("text", specialRequests);
 
         try {
-            String query = String.format("INSERT INTO booking VALUES ('%s','%s','%s','%s','%s','%s');", bookingID, startDate, endDate, sr, hotelID, roomNumber);
+            String query = String.format("INSERT INTO booking VALUES ('%s','%s','%s','%s','%s','%s','%s');", bookingID, startDate, endDate, sr, hotelID, roomNumber, customerID);
             statement = connect.createStatement();
             statement.executeUpdate(query);
             System.out.println("Booking Row Added");
 
-            addArchive(connect, bookingID, "booking", startDate, endDate, sr, hotelID, roomNumber);
+            addArchive(connect, bookingID, "booking", startDate, endDate, sr, hotelID, roomNumber, customerID);
         } catch(Exception e){
             e.printStackTrace();
         }
@@ -157,18 +157,18 @@ public class DBFunctions {
         }
     }
 
-    public void addRenting(Connection connect, int rentingID, Date startDate, Date endDate, String[] specialRequests, int hotelID, int roomNumber) throws SQLException{
+    public void addRenting(Connection connect, int rentingID, Date startDate, Date endDate, String[] specialRequests, int hotelID, int roomNumber, int customerID) throws SQLException{
         Statement statement;
 
         Array sr = connect.createArrayOf("text", specialRequests);
 
         try {
-            String query = String.format("INSERT INTO renting VALUES ('%s','%s','%s','%s','%s','%s');", rentingID, startDate, endDate, sr, hotelID, roomNumber);
+            String query = String.format("INSERT INTO renting VALUES ('%s','%s','%s','%s','%s','%s','%s');", rentingID, startDate, endDate, sr, hotelID, roomNumber, customerID);
             statement = connect.createStatement();
             statement.executeUpdate(query);
             System.out.println("Renting Row Added");
 
-            addArchive(connect, rentingID, "renting", startDate, endDate, sr, hotelID, roomNumber);
+            addArchive(connect, rentingID, "renting", startDate, endDate, sr, hotelID, roomNumber, customerID);
         } catch(Exception e){
             e.printStackTrace();
         }
@@ -190,5 +190,5 @@ public class DBFunctions {
         }
     }
 
-
+    
 }
