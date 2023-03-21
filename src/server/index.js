@@ -36,8 +36,9 @@ app.post("/testtable", async (req, res) => {
 // Get Hotels
 app.get("/get-hotels", async (req, res) => {
     try {
-        const allHotels = await pool.query(setSchema + "SELECT * FROM Hotel");
-        res.json(allHotels[1].rows); // treated as an array because "set" command is treated as first object
+        await pool.query(setSchema);
+        const allHotels = await pool.query("SELECT * FROM Hotel");
+        res.json(allHotels.rows); // treated as an array because "set" command is treated as first object
     } catch (err) {
         console.error(err);
     }
