@@ -143,6 +143,199 @@ app.get("/get-rooms", async (req, res) => {
     }
 })
 
+// Search Customers -- NOT FINISHED
+app.get("/search-customers", async (req, res) => {
+    let { customerid, sin, fullname, customeraddress, age, registrationdate, creditcardnumber } = req.query;
+
+    let counter = 1;
+
+    let query = {
+        text: "SELECT * FROM customer WHERE true",
+        values: [],
+    };
+
+    if (customerid) {
+        query.text += " AND customerid = $" + counter.toString();
+        query.values.push(customerid);
+        counter += 1;
+    }
+
+    if (sin) {
+        query.text += " AND sin = $" + counter.toString();
+        query.values.push(sin);
+        counter += 1;
+    }
+
+    if (fullname) {
+        query.text += " AND fullname ILIKE $" + counter.toString();
+        query.values.push('%' + fullname + '%');
+        counter += 1;
+    }
+
+    if (customeraddress) {
+        query.text += " AND customeraddress ILIKE $" + counter.toString();
+        query.values.push('%' + customeraddress + '%');
+        counter += 1;
+    }
+
+    if (age) {
+        query.text += " AND age >= $" + counter.toString();
+        query.values.push(age);
+        counter += 1;
+    }
+
+    if (registrationdate) {
+        query.text += " AND registrationdate >= $" + counter.toString();
+        query.values.push(registrationdate);
+        counter += 1;
+    }
+
+    if (creditcardnumber) {
+        query.text += " AND creditcardnumber = $" + counter.toString();
+        query.values.push(creditcardnumber);
+        counter += 1;
+    }
+
+    console.log(query);
+
+    try {
+        await pool.query(setSchema);
+        const result = await pool.query(query);
+        res.json(result.rows);
+    } catch (err) {
+        console.error(err);
+    }
+})
+
+
+app.get("/search-employees", async (req, res) => {
+    let {fullname, employeeaddress, age, hotelid} = req.query;
+
+    // test search
+    employeeaddress = "Ottawa";
+    age = 44;
+    hotelid = 2;
+
+    let counter = 1;
+
+    let query = {
+        text: "SELECT * FROM employee",
+        values: [],
+    };
+
+    if(fullname){
+        query.text += " WHERE fullname = $" + counter.toString();
+        query.values.push(fullname);
+        counter += 1;
+    }
+
+    if(employeeaddress){
+        if(counter === 1){
+            query.text += " WHERE employeeaddress ILIKE $" + counter.toString();
+        } else {
+            query.text += " AND employeeaddress ILIKE $" + counter.toString();
+        }
+        query.values.push('%' + employeeaddress + '%');
+        counter += 1;
+    }
+
+    if(age){
+        if (counter == 1) {
+            query.text += " WHERE";
+        } else {
+            query.text += " AND";
+        }
+        query.text += " age = $" + counter.toString();
+        query.values.push(age);
+        counter += 1;
+    }
+
+    if(hotelid){
+        if (counter == 1) {
+            query.text += " WHERE";
+        } else {
+            query.text += " AND";
+        }
+        query.text += " hotelid = $" + counter.toString();
+        query.values.push(hotelid);
+        counter += 1;
+    }
+
+    console.log(query);
+
+    try {
+        await pool.query(setSchema);
+        const result = await pool.query(query);
+        res.json(result.rows);
+    } catch (err) {
+        console.error(err);
+    }
+})
+
+
+// Search Hotels
+app.get("/search-hotels", async (req, res) => {
+    let {hotelname, hoteladdress, stars, phonenumbers, contactemails, chainname} = req.query;
+
+    // test search
+    stars = 3;
+    // chainname = "Adfaces";
+    hoteladdress = "Ottawa";
+
+    let counter = 1;
+
+    let query = {
+        text: "SELECT * FROM hotel",
+        values: [],
+    };
+
+    if(hotelname){
+        query.text += " WHERE hotelname = $" + counter.toString();
+        query.values.push(hotelname);
+        counter += 1;
+    }
+
+    if(hoteladdress){
+        if(counter === 1){
+            query.text += " WHERE hoteladdress ILIKE $" + counter.toString();
+        } else {
+            query.text += " AND hoteladdress ILIKE $" + counter.toString();
+        }
+        query.values.push('%' + hoteladdress + '%');
+        counter += 1;
+    }
+
+    if(stars){
+        if(counter === 1){
+            query.text += " WHERE stars >= $" + counter.toString();
+        } else {
+            query.text += " AND stars >= $" + counter.toString();
+        }
+        query.values.push(stars);
+        counter += 1;
+    }
+
+    if(chainname){
+        if(counter === 1){
+            query.text += " WHERE chainname = $" + counter.toString();
+        } else {
+            query.text += " AND chainname = $" + counter.toString();
+        }
+        query.values.push(chainname);
+        counter += 1;
+    }
+
+    console.log(query);
+
+    try {
+        await pool.query(setSchema);
+        const result = await pool.query(query);
+        res.json(result.rows);
+    } catch (err) {
+        console.error(err);
+    }
+})
+
 // Search Rooms
 app.get("/search-rooms", async (req, res) => {
     let {roomnumber, price, occupied, amenities, extendable, view, issues, capacity, hotelid} = req.query;
@@ -215,6 +408,7 @@ app.get("/search-rooms", async (req, res) => {
         console.error(err);
     }
 })
+
 
 
 // update
