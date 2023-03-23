@@ -143,6 +143,79 @@ app.get("/get-rooms", async (req, res) => {
     }
 })
 
+// Search Rooms
+app.get("/search-rooms", async (req, res) => {
+    let {roomnumber, price, occupied, amenities, extendable, view, issues, capacity, hotelid} = req.query;
+
+    // test search
+    price = 110;
+    const amenitiesTest = [];
+    amenitiesTest.push("Air Conditioning");
+    extendable = "true";
+    view = "Sea";
+    capacity = 2;
+    let counter = 1;
+
+    let query = {
+        text: "SELECT * FROM room WHERE occupied = false",
+        values: [],
+    };
+
+    if(price){
+        query.text += " AND price <= $" + counter.toString();
+        query.values.push(price);
+        counter += 1;
+    }
+
+    if(amenitiesTest && Array.isArray(amenitiesTest)){
+        const amenitiesArray = `{${amenitiesTest.join(',')}}`;
+
+        query.text += ' AND amenities @> $' + counter.toString();
+        query.values.push(amenitiesArray);
+        counter += 1;
+    }
+
+    if(extendable){
+        query.text += ' AND extendable = $' + counter.toString();
+        query.values.push(extendable === 'true');
+        counter += 1;
+    }
+
+    if(view){
+        query.text += " AND view = $" + counter.toString();
+        query.values.push(view);
+        counter += 1;
+    }
+
+    if(issues){
+        query.text += " AND issues = $" + counter.toString();
+        query.values.push(issues);
+        counter += 1;
+    } 
+
+    if(capacity){
+        query.text += " AND capacity >= $" + counter.toString();
+        query.values.push(capacity);
+        counter += 1;
+    }
+
+    if(hotelid){
+        query.text += " AND hotelid = $" + counter.toString();
+        query.values.push(hotelid);
+        counter += 1;
+    } 
+
+    console.log(query);
+
+    try {
+        await pool.query(setSchema);
+        const result = await pool.query(query);
+        res.json(result.rows);
+    } catch (err) {
+        console.error(err);
+    }
+})
+
 
 // update
 
