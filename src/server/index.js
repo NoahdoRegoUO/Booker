@@ -143,7 +143,62 @@ app.get("/get-rooms", async (req, res) => {
     }
 })
 
-// Search Customers -- NOT FINISHED
+// Search Bookings
+app.get("/search-bookings", async (req, res) => {
+    let { startdate, enddate, specialrequests, hotelid, roomnumber, customerid } = req.query;
+  
+    let counter = 1;
+  
+    let query = {
+      text: "SELECT * FROM booking WHERE TRUE",
+      values: [],
+    };
+  
+    if (startdate && enddate) {
+      query.text += " AND startdate <= $" + counter.toString() + " AND enddate >= $" + (counter + 1).toString();
+      query.values.push(startdate, enddate);
+      counter += 2;
+    }
+  
+    if (specialRequestsTest && Array.isArray(specialRequestsTest)) {
+      const specialRequestsArray = `{${specialRequests.join(',')}}`;
+  
+      query.text += " AND specialrequests @> $" + counter.toString();
+      query.values.push(specialRequestsArray);
+      counter += 1;
+    }
+  
+    if (hotelid) {
+      query.text += " AND hotelid = $" + counter.toString();
+      query.values.push(hotelid);
+      counter += 1;
+    }
+  
+    if (roomnumber) {
+      query.text += " AND roomnumber = $" + counter.toString();
+      query.values.push(roomnumber);
+      counter += 1;
+    }
+  
+    if (customerid) {
+      query.text += " AND customerid = $" + counter.toString();
+      query.values.push(customerid);
+      counter += 1;
+    }
+  
+    console.log(query);
+  
+    try {
+      await pool.query(setSchema);
+      const result = await pool.query(query);
+      res.json(result.rows);
+    } catch (err) {
+      console.error(err);
+    }
+  })
+
+
+// Search Customers
 app.get("/search-customers", async (req, res) => {
     let { customerid, sin, fullname, customeraddress, age, registrationdate, creditcardnumber } = req.query;
 
@@ -340,15 +395,6 @@ app.get("/search-hotels", async (req, res) => {
 app.get("/search-rooms", async (req, res) => {
     let {roomnumber, price, occupied, amenities, extendable, view, issues, capacity, hotelid} = req.query;
 
-    // test search
-    price = 110;
-    const amenitiesTest = [];
-    amenitiesTest.push("Air Conditioning");
-    extendable = "true";
-    view = "Sea";
-    capacity = 2;
-    let counter = 1;
-
     let query = {
         text: "SELECT * FROM room WHERE occupied = false",
         values: [],
@@ -360,8 +406,8 @@ app.get("/search-rooms", async (req, res) => {
         counter += 1;
     }
 
-    if(amenitiesTest && Array.isArray(amenitiesTest)){
-        const amenitiesArray = `{${amenitiesTest.join(',')}}`;
+    if(amenities && Array.isArray(amenities)){
+        const amenitiesArray = `{${amenities.join(',')}}`;
 
         query.text += ' AND amenities @> $' + counter.toString();
         query.values.push(amenitiesArray);
