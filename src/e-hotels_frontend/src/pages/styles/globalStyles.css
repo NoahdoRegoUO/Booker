@@ -19,7 +19,7 @@
 .subtitle-text {
     color: white;
     font-size: calc(5px + 2vmin);
-    line-height: 0;
+    line-height: 1;
     font-weight: normal;
 }
 
@@ -27,4 +27,8 @@
     color: white;
     font-size: calc(10px + 3vmin);
     font-weight: bold;
+}
+
+.dropdown {
+    width: 100px;
 }

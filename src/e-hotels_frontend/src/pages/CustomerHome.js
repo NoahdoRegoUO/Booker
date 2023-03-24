@@ -7,33 +7,94 @@ import { Link } from "react-router-dom";
 
 import Select from 'react-select';
 
-const options = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' }
+const starOptions = [
+    { value: 1, label: '1 Star' },
+    { value: 2, label: '2 Stars' },
+    { value: 3, label: '3 Stars' },
+    { value: 4, label: '4 Stars' },
+    { value: 5, label: '5 Stars' }
 ]
+
+const selectCustomStyles = {
+    option: (defaultStyles) => ({
+        ...defaultStyles,
+        color: "#1f1f1f",
+        backgroundColor: "#f2f2f2",
+        fontSize: "2vmin",
+    }),
+    control: (defaultStyles) => ({
+        ...defaultStyles,
+        color: "#1f1f1f",
+        backgroundColor: "#f2f2f2",
+        padding: "5px",
+        border: "none",
+        boxShadow: "none",
+        fontSize: "2vmin",
+    }),
+    singleValue: (defaultStyles) => ({
+        ...defaultStyles,
+        color: "#1f1f1f",
+        fontSize: "2vmin"
+    }),
+};
 
 function CustomerHome() {
     return (
         <div className="page-background">
             <p className="title-text">Search Hotels</p>
             <div id="search-info">
-                <p className="subtitle-text">Hotel Information</p>
+                <p className="subtitle-text" id="search-title">Hotel Information</p>
                 <Select
-                    className="basic-single"
-                    classNamePrefix="select"
-                    defaultValue={"1"}
-                    isDisabled={false}
-                    isLoading={false}
-                    isClearable={true}
-                    isRtl={false}
+                    id="select-dropdown"
+                    defaultValue={null}
+                    placeholder="Location"
+                    options={starOptions}
+                    styles={selectCustomStyles}
                     isSearchable={false}
-                    name="stars"
-                    options={options}
+                />
+                <Select
+                    id="select-dropdown"
+                    defaultValue={null}
+                    placeholder="Stars"
+                    options={starOptions}
+                    styles={selectCustomStyles}
+                    isSearchable={false}
+                />
+                <Select
+                    id="select-dropdown"
+                    defaultValue={null}
+                    placeholder="Chain"
+                    options={starOptions}
+                    styles={selectCustomStyles}
+                    isSearchable={false}
                 />
             </div>
             <div id="search-info">
-                <p className="subtitle-text">Room Information</p>
+                <p className="subtitle-text" id="search-title">Room Information</p>
+                <Select
+                    id="select-dropdown"
+                    defaultValue={null}
+                    placeholder="Total Number of Rooms"
+                    options={starOptions}
+                    styles={selectCustomStyles}
+                    isSearchable={false}
+                />
+                <Select
+                    id="select-dropdown"
+                    defaultValue={null}
+                    placeholder="Room Capacity"
+                    options={starOptions}
+                    styles={selectCustomStyles}
+                    isSearchable={false}
+                />
+                <Select
+                    id="select-dropdown"
+                    defaultValue={null}
+                    placeholder="Price Range"
+                    options={starOptions}
+                    styles={selectCustomStyles}
+                    isSearchable={false}
+                />
             </div>
         </div>
     );
