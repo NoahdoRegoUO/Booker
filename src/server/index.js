@@ -143,6 +143,101 @@ app.get("/get-rooms", async (req, res) => {
     }
 })
 
+// Insert Booking
+app.post("/insert-bookings", async (req, res) => {
+    const {startdate, enddate, specialrequests, hotelid, roomnumber, customerid} = req.body;
+    
+    const query = {
+      text: `INSERT INTO bookings (startdate, enddate, specialrequests, hotelid, roomnumber, customerid) VALUES ($1, $2, $3, $4, $5, $6)`,
+      values: [startdate, enddate, specialrequests, hotelid, roomnumber, customerid],
+    };
+  
+    try {
+      await pool.query(setSchema);
+      const result = await pool.query(query);
+      res.json(result.rows);
+    } catch (err) {
+      console.error(err);
+    }
+  });
+
+  // Insert Customer
+  app.post("/insert-customers", async (req, res) => {
+    try {
+      const { sin, fullname, customeraddress, age, registrationdate, creditcardnumber } = req.body;
+  
+      // Get the highest current customerid
+      const highestCustomerIdResult = await pool.query('SELECT MAX(customerid) FROM customer');
+      const highestCustomerId = highestCustomerIdResult.rows[0].max || 0;
+      const nextCustomerId = highestCustomerId + 1;
+  
+      const query = {
+        text: "INSERT INTO customer(customerid, sin, fullname, customeraddress, age, registrationdate, creditcardnumber) VALUES($1, $2, $3, $4, $5, $6, $7)",
+        values: [nextCustomerId, sin, fullname, customeraddress, age, registrationdate, creditcardnumber],
+      };
+  
+      await pool.query(setSchema);
+      await pool.query(query);
+      res.send(`Customer ${nextCustomerId} added successfully`);
+    } catch (err) {
+      console.error(err);
+      res.send(err.message);
+    }
+  });
+
+// Insert Employee
+app.post("/insert-employees", async (req, res) => {
+    try {  
+      const {sin, fullname, employeeaddress, age, hotelid} = req.body; 
+
+      // Get the highest current employeeid
+      const employeeIdResult = await pool.query("SELECT MAX(employeeid) FROM employee");
+      const employeeId = employeeIdResult.rows[0].max + 1;
+  
+      const query = {
+        text: "INSERT INTO employee (employeeid, sin, fullname, employeeaddress, age, hotelid) VALUES($1, $2, $3, $4, $5, $6)",
+        values: [employeeId, sin, fullname, employeeaddress, age, hotelid]
+      };
+  
+      await pool.query(setSchema);
+      await pool.query(query);
+      res.send(`Customer ${nextCustomerId} added successfully`);
+    } catch (err) {
+      console.error(err);
+      res.send(err.message);
+    }
+  });
+  
+// Insert Hotels
+app.post('/insert-hotels', async (req, res) => {
+    const { hotelname, hoteladdress, stars, phonenumbers, contactemails, chainname } = req.body;
+  
+    try {
+      // Get the highest current hotelid
+      const highestHotelIdQuery = {
+        text: 'SELECT MAX(hotelid) AS highest_hotelid FROM hotels',
+      };
+      const result = await pool.query(highestHotelIdQuery);
+      const highestHotelId = result.rows[0].highest_hotelid;
+  
+      // Generate the new hotelid
+      const newHotelId = highestHotelId ? highestHotelId + 1 : 1;
+  
+      // Insert the new row into the hotels table
+      const insertQuery = {
+        text: 'INSERT INTO hotels (hotelid, hotelname, hoteladdress, stars, phonenumbers, contactemails, chainname) VALUES ($1, $2, $3, $4, $5, $6, $7)',
+        values: [newHotelId, hotelname, hoteladdress, stars, phonenumbers, contactemails, chainname],
+      };
+      await pool.query(insertQuery);
+  
+      res.sendStatus(201); // Created
+    } catch (err) {
+      console.error(err);
+      res.sendStatus(500); // Internal Server Error
+    }
+  });
+  
+
 // Search Bookings
 app.get("/search-bookings", async (req, res) => {
     let { startdate, enddate, specialrequests, hotelid, roomnumber, customerid } = req.query;
