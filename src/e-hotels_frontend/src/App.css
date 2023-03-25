@@ -19,6 +19,11 @@ body{
   margin: 5vh;
 }
 
+.button-style {
+  height: fit-content;
+  margin-bottom: 1vmin;
+}
+
 #sign-in-text {
   color: white;
   font-size: calc(10px + 3vmin);
