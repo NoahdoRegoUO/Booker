@@ -1,0 +1,21 @@
+#search-info {
+    width: 90%;
+    display: flex;
+    padding: 10px;
+    flex-direction: row;
+    border: 3px solid white;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    justify-content: left;
+    align-items: center;
+}
+
+#search-title {
+    margin-right: 3vmin;
+}
+
+#select-dropdown {
+    margin-left: 3vmin;
+    width: 26%;
+    text-align: left;
+}
