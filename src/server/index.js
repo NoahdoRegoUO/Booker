@@ -38,7 +38,7 @@ app.get("/get-archives", async (req, res) => {
     try {
         await pool.query(setSchema);
         const archiveData = await pool.query("SELECT * FROM archive");
-        res.json(archiveData.rows); 
+        res.json(archiveData.rows);
     } catch (err) {
         console.error(err);
     }
@@ -49,7 +49,7 @@ app.get("/get-bookings", async (req, res) => {
     try {
         await pool.query(setSchema);
         const allBookings = await pool.query("SELECT * FROM booking");
-        res.json(allBookings.rows); 
+        res.json(allBookings.rows);
     } catch (err) {
         console.error(err);
     }
@@ -60,7 +60,7 @@ app.get("/get-central-offices", async (req, res) => {
     try {
         await pool.query(setSchema);
         const allCentralOffices = await pool.query("SELECT * FROM centraloffice");
-        res.json(allCentralOffices.rows); 
+        res.json(allCentralOffices.rows);
     } catch (err) {
         console.error(err);
     }
@@ -71,7 +71,7 @@ app.get("/get-customers", async (req, res) => {
     try {
         await pool.query(setSchema);
         const allCustomers = await pool.query("SELECT * FROM customer");
-        res.json(allCustomers.rows); 
+        res.json(allCustomers.rows);
     } catch (err) {
         console.error(err);
     }
@@ -82,7 +82,7 @@ app.get("/get-employees", async (req, res) => {
     try {
         await pool.query(setSchema);
         const allEmployees = await pool.query("SELECT * FROM employee");
-        res.json(allEmployees.rows); 
+        res.json(allEmployees.rows);
     } catch (err) {
         console.error(err);
     }
@@ -93,7 +93,7 @@ app.get("/get-hotels", async (req, res) => {
     try {
         await pool.query(setSchema);
         const allHotels = await pool.query("SELECT * FROM Hotel");
-        res.json(allHotels.rows); 
+        res.json(allHotels.rows);
     } catch (err) {
         console.error(err);
     }
@@ -104,7 +104,7 @@ app.get("/get-hotel-chains", async (req, res) => {
     try {
         await pool.query(setSchema);
         const allHotelChains = await pool.query("SELECT * FROM hotelchain");
-        res.json(allHotelChains.rows); 
+        res.json(allHotelChains.rows);
     } catch (err) {
         console.error(err);
     }
@@ -115,7 +115,7 @@ app.get("/get-positions", async (req, res) => {
     try {
         await pool.query(setSchema);
         const allPositions = await pool.query("SELECT * FROM position");
-        res.json(allPositions.rows); 
+        res.json(allPositions.rows);
     } catch (err) {
         console.error(err);
     }
@@ -126,7 +126,7 @@ app.get("/get-rentings", async (req, res) => {
     try {
         await pool.query(setSchema);
         const allRentings = await pool.query("SELECT * FROM renting");
-        res.json(allRentings.rows); 
+        res.json(allRentings.rows);
     } catch (err) {
         console.error(err);
     }
@@ -137,7 +137,7 @@ app.get("/get-rooms", async (req, res) => {
     try {
         await pool.query(setSchema);
         const allRooms = await pool.query("SELECT * FROM room");
-        res.json(allRooms.rows); 
+        res.json(allRooms.rows);
     } catch (err) {
         console.error(err);
     }
@@ -145,152 +145,152 @@ app.get("/get-rooms", async (req, res) => {
 
 // Insert Booking
 app.post("/insert-bookings", async (req, res) => {
-    const {startdate, enddate, specialrequests, hotelid, roomnumber, customerid} = req.body;
-    
-    const query = {
-      text: `INSERT INTO bookings (startdate, enddate, specialrequests, hotelid, roomnumber, customerid) VALUES ($1, $2, $3, $4, $5, $6)`,
-      values: [startdate, enddate, specialrequests, hotelid, roomnumber, customerid],
-    };
-  
-    try {
-      await pool.query(setSchema);
-      const result = await pool.query(query);
-      res.json(result.rows);
-    } catch (err) {
-      console.error(err);
-    }
-  });
+    const { startdate, enddate, specialrequests, hotelid, roomnumber, customerid } = req.body;
 
-  // Insert Customer
-  app.post("/insert-customers", async (req, res) => {
+    const query = {
+        text: `INSERT INTO bookings (startdate, enddate, specialrequests, hotelid, roomnumber, customerid) VALUES ($1, $2, $3, $4, $5, $6)`,
+        values: [startdate, enddate, specialrequests, hotelid, roomnumber, customerid],
+    };
+
     try {
-      const { sin, fullname, customeraddress, age, registrationdate, creditcardnumber } = req.body;
-  
-      // Get the highest current customerid
-      const highestCustomerIdResult = await pool.query('SELECT MAX(customerid) FROM customer');
-      const highestCustomerId = highestCustomerIdResult.rows[0].max || 0;
-      const nextCustomerId = highestCustomerId + 1;
-  
-      const query = {
-        text: "INSERT INTO customer(customerid, sin, fullname, customeraddress, age, registrationdate, creditcardnumber) VALUES($1, $2, $3, $4, $5, $6, $7)",
-        values: [nextCustomerId, sin, fullname, customeraddress, age, registrationdate, creditcardnumber],
-      };
-  
-      await pool.query(setSchema);
-      await pool.query(query);
-      res.send(`Customer ${nextCustomerId} added successfully`);
+        await pool.query(setSchema);
+        const result = await pool.query(query);
+        res.json(result.rows);
     } catch (err) {
-      console.error(err);
-      res.send(err.message);
+        console.error(err);
     }
-  });
+});
+
+// Insert Customer
+app.post("/insert-customers", async (req, res) => {
+    try {
+        const { sin, fullname, customeraddress, age, registrationdate, creditcardnumber } = req.body;
+
+        // Get the highest current customerid
+        const highestCustomerIdResult = await pool.query('SELECT MAX(customerid) FROM customer');
+        const highestCustomerId = highestCustomerIdResult.rows[0].max || 0;
+        const nextCustomerId = highestCustomerId + 1;
+
+        const query = {
+            text: "INSERT INTO customer(customerid, sin, fullname, customeraddress, age, registrationdate, creditcardnumber) VALUES($1, $2, $3, $4, $5, $6, $7)",
+            values: [nextCustomerId, sin, fullname, customeraddress, age, registrationdate, creditcardnumber],
+        };
+
+        await pool.query(setSchema);
+        await pool.query(query);
+        res.send(`Customer ${nextCustomerId} added successfully`);
+    } catch (err) {
+        console.error(err);
+        res.send(err.message);
+    }
+});
 
 // Insert Employee
 app.post("/insert-employees", async (req, res) => {
-    try {  
-      const {sin, fullname, employeeaddress, age, hotelid} = req.body; 
+    try {
+        const { sin, fullname, employeeaddress, age, hotelid } = req.body;
 
-      // Get the highest current employeeid
-      const employeeIdResult = await pool.query("SELECT MAX(employeeid) FROM employee");
-      const employeeId = employeeIdResult.rows[0].max + 1;
-  
-      const query = {
-        text: "INSERT INTO employee (employeeid, sin, fullname, employeeaddress, age, hotelid) VALUES($1, $2, $3, $4, $5, $6)",
-        values: [employeeId, sin, fullname, employeeaddress, age, hotelid]
-      };
-  
-      await pool.query(setSchema);
-      await pool.query(query);
-      res.send(`Customer ${nextCustomerId} added successfully`);
+        // Get the highest current employeeid
+        const employeeIdResult = await pool.query("SELECT MAX(employeeid) FROM employee");
+        const employeeId = employeeIdResult.rows[0].max + 1;
+
+        const query = {
+            text: "INSERT INTO employee (employeeid, sin, fullname, employeeaddress, age, hotelid) VALUES($1, $2, $3, $4, $5, $6)",
+            values: [employeeId, sin, fullname, employeeaddress, age, hotelid]
+        };
+
+        await pool.query(setSchema);
+        await pool.query(query);
+        res.send(`Customer ${nextCustomerId} added successfully`);
     } catch (err) {
-      console.error(err);
-      res.send(err.message);
+        console.error(err);
+        res.send(err.message);
     }
-  });
-  
+});
+
 // Insert Hotels
 app.post('/insert-hotels', async (req, res) => {
     const { hotelname, hoteladdress, stars, phonenumbers, contactemails, chainname } = req.body;
-  
+
     try {
-      // Get the highest current hotelid
-      const highestHotelIdQuery = {
-        text: 'SELECT MAX(hotelid) AS highest_hotelid FROM hotels',
-      };
-      const result = await pool.query(highestHotelIdQuery);
-      const highestHotelId = result.rows[0].highest_hotelid;
-  
-      // Generate the new hotelid
-      const newHotelId = highestHotelId ? highestHotelId + 1 : 1;
-  
-      // Insert the new row into the hotels table
-      const insertQuery = {
-        text: 'INSERT INTO hotels (hotelid, hotelname, hoteladdress, stars, phonenumbers, contactemails, chainname) VALUES ($1, $2, $3, $4, $5, $6, $7)',
-        values: [newHotelId, hotelname, hoteladdress, stars, phonenumbers, contactemails, chainname],
-      };
-      await pool.query(insertQuery);
-  
-      res.sendStatus(201); // Created
+        // Get the highest current hotelid
+        const highestHotelIdQuery = {
+            text: 'SELECT MAX(hotelid) AS highest_hotelid FROM hotels',
+        };
+        const result = await pool.query(highestHotelIdQuery);
+        const highestHotelId = result.rows[0].highest_hotelid;
+
+        // Generate the new hotelid
+        const newHotelId = highestHotelId ? highestHotelId + 1 : 1;
+
+        // Insert the new row into the hotels table
+        const insertQuery = {
+            text: 'INSERT INTO hotels (hotelid, hotelname, hoteladdress, stars, phonenumbers, contactemails, chainname) VALUES ($1, $2, $3, $4, $5, $6, $7)',
+            values: [newHotelId, hotelname, hoteladdress, stars, phonenumbers, contactemails, chainname],
+        };
+        await pool.query(insertQuery);
+
+        res.sendStatus(201); // Created
     } catch (err) {
-      console.error(err);
-      res.sendStatus(500); // Internal Server Error
+        console.error(err);
+        res.sendStatus(500); // Internal Server Error
     }
-  });
-  
+});
+
 
 // Search Bookings
 app.get("/search-bookings", async (req, res) => {
     let { startdate, enddate, specialrequests, hotelid, roomnumber, customerid } = req.query;
-  
+
     let counter = 1;
-  
+
     let query = {
-      text: "SELECT * FROM booking WHERE TRUE",
-      values: [],
+        text: "SELECT * FROM booking WHERE TRUE",
+        values: [],
     };
-  
+
     if (startdate && enddate) {
-      query.text += " AND startdate <= $" + counter.toString() + " AND enddate >= $" + (counter + 1).toString();
-      query.values.push(startdate, enddate);
-      counter += 2;
+        query.text += " AND startdate <= $" + counter.toString() + " AND enddate >= $" + (counter + 1).toString();
+        query.values.push(startdate, enddate);
+        counter += 2;
     }
-  
+
     if (specialRequestsTest && Array.isArray(specialRequestsTest)) {
-      const specialRequestsArray = `{${specialRequests.join(',')}}`;
-  
-      query.text += " AND specialrequests @> $" + counter.toString();
-      query.values.push(specialRequestsArray);
-      counter += 1;
+        const specialRequestsArray = `{${specialRequests.join(',')}}`;
+
+        query.text += " AND specialrequests @> $" + counter.toString();
+        query.values.push(specialRequestsArray);
+        counter += 1;
     }
-  
+
     if (hotelid) {
-      query.text += " AND hotelid = $" + counter.toString();
-      query.values.push(hotelid);
-      counter += 1;
+        query.text += " AND hotelid = $" + counter.toString();
+        query.values.push(hotelid);
+        counter += 1;
     }
-  
+
     if (roomnumber) {
-      query.text += " AND roomnumber = $" + counter.toString();
-      query.values.push(roomnumber);
-      counter += 1;
+        query.text += " AND roomnumber = $" + counter.toString();
+        query.values.push(roomnumber);
+        counter += 1;
     }
-  
+
     if (customerid) {
-      query.text += " AND customerid = $" + counter.toString();
-      query.values.push(customerid);
-      counter += 1;
+        query.text += " AND customerid = $" + counter.toString();
+        query.values.push(customerid);
+        counter += 1;
     }
-  
+
     console.log(query);
-  
+
     try {
-      await pool.query(setSchema);
-      const result = await pool.query(query);
-      res.json(result.rows);
+        await pool.query(setSchema);
+        const result = await pool.query(query);
+        res.json(result.rows);
     } catch (err) {
-      console.error(err);
+        console.error(err);
     }
-  })
+})
 
 
 // Search Customers
@@ -359,7 +359,7 @@ app.get("/search-customers", async (req, res) => {
 
 
 app.get("/search-employees", async (req, res) => {
-    let {fullname, employeeaddress, age, hotelid} = req.query;
+    let { fullname, employeeaddress, age, hotelid } = req.query;
 
     // test search
     employeeaddress = "Ottawa";
@@ -373,14 +373,14 @@ app.get("/search-employees", async (req, res) => {
         values: [],
     };
 
-    if(fullname){
+    if (fullname) {
         query.text += " WHERE fullname = $" + counter.toString();
         query.values.push(fullname);
         counter += 1;
     }
 
-    if(employeeaddress){
-        if(counter === 1){
+    if (employeeaddress) {
+        if (counter === 1) {
             query.text += " WHERE employeeaddress ILIKE $" + counter.toString();
         } else {
             query.text += " AND employeeaddress ILIKE $" + counter.toString();
@@ -389,7 +389,7 @@ app.get("/search-employees", async (req, res) => {
         counter += 1;
     }
 
-    if(age){
+    if (age) {
         if (counter == 1) {
             query.text += " WHERE";
         } else {
@@ -400,7 +400,7 @@ app.get("/search-employees", async (req, res) => {
         counter += 1;
     }
 
-    if(hotelid){
+    if (hotelid) {
         if (counter == 1) {
             query.text += " WHERE";
         } else {
@@ -425,7 +425,7 @@ app.get("/search-employees", async (req, res) => {
 
 // Search Hotels
 app.get("/search-hotels", async (req, res) => {
-    let {hotelname, hoteladdress, stars, phonenumbers, contactemails, chainname} = req.query;
+    let { hotelname, hoteladdress, stars, phonenumbers, contactemails, chainname } = req.query;
 
     // test search
     stars = 3;
@@ -439,14 +439,14 @@ app.get("/search-hotels", async (req, res) => {
         values: [],
     };
 
-    if(hotelname){
+    if (hotelname) {
         query.text += " WHERE hotelname = $" + counter.toString();
         query.values.push(hotelname);
         counter += 1;
     }
 
-    if(hoteladdress){
-        if(counter === 1){
+    if (hoteladdress) {
+        if (counter === 1) {
             query.text += " WHERE hoteladdress ILIKE $" + counter.toString();
         } else {
             query.text += " AND hoteladdress ILIKE $" + counter.toString();
@@ -455,8 +455,8 @@ app.get("/search-hotels", async (req, res) => {
         counter += 1;
     }
 
-    if(stars){
-        if(counter === 1){
+    if (stars) {
+        if (counter === 1) {
             query.text += " WHERE stars >= $" + counter.toString();
         } else {
             query.text += " AND stars >= $" + counter.toString();
@@ -465,8 +465,8 @@ app.get("/search-hotels", async (req, res) => {
         counter += 1;
     }
 
-    if(chainname){
-        if(counter === 1){
+    if (chainname) {
+        if (counter === 1) {
             query.text += " WHERE chainname = $" + counter.toString();
         } else {
             query.text += " AND chainname = $" + counter.toString();
@@ -488,20 +488,20 @@ app.get("/search-hotels", async (req, res) => {
 
 // Search Rooms
 app.get("/search-rooms", async (req, res) => {
-    let {roomnumber, price, occupied, amenities, extendable, view, issues, capacity, hotelid} = req.query;
+    let { roomnumber, price, occupied, amenities, extendable, view, issues, capacity, hotelid } = req.query;
 
     let query = {
         text: "SELECT * FROM room WHERE occupied = false",
         values: [],
     };
 
-    if(price){
+    if (price) {
         query.text += " AND price <= $" + counter.toString();
         query.values.push(price);
         counter += 1;
     }
 
-    if(amenities && Array.isArray(amenities)){
+    if (amenities && Array.isArray(amenities)) {
         const amenitiesArray = `{${amenities.join(',')}}`;
 
         query.text += ' AND amenities @> $' + counter.toString();
@@ -509,35 +509,35 @@ app.get("/search-rooms", async (req, res) => {
         counter += 1;
     }
 
-    if(extendable){
+    if (extendable) {
         query.text += ' AND extendable = $' + counter.toString();
         query.values.push(extendable === 'true');
         counter += 1;
     }
 
-    if(view){
+    if (view) {
         query.text += " AND view = $" + counter.toString();
         query.values.push(view);
         counter += 1;
     }
 
-    if(issues){
+    if (issues) {
         query.text += " AND issues = $" + counter.toString();
         query.values.push(issues);
         counter += 1;
-    } 
+    }
 
-    if(capacity){
+    if (capacity) {
         query.text += " AND capacity >= $" + counter.toString();
         query.values.push(capacity);
         counter += 1;
     }
 
-    if(hotelid){
+    if (hotelid) {
         query.text += " AND hotelid = $" + counter.toString();
         query.values.push(hotelid);
         counter += 1;
-    } 
+    }
 
     console.log(query);
 
@@ -554,7 +554,20 @@ app.get("/search-rooms", async (req, res) => {
 
 // update
 
+app.post('/update-hotel', async (req, res) => {
+    const { hotelid, hotelname, hoteladdress, stars, phonenumbers, contactemails, chainname } = req.body;
 
+    try {
+        await pool.query(
+            "UPDATE hotels SET hotelname = $1, hoteladdress = $2, stars = $3, phonenumbers = $4, contactemails = $5, chainname = $6 WHERE hotelid = $7"
+            [hotelname, hoteladdress, stars, phonenumbers, contactemails, chainname, hotelid]
+        );
+        res.status(200).send('Hotel updated successfully');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Something went wrong');
+    }
+});
 
 // delete
 
