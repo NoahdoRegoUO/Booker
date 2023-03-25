@@ -92,7 +92,7 @@ app.get("/get-employees", async (req, res) => {
 app.get("/get-hotels", async (req, res) => {
     try {
         await pool.query(setSchema);
-        const allHotels = await pool.query("SELECT * FROM Hotel");
+        const allHotels = await pool.query("SELECT * FROM Hotel ORDER BY hotelid asc");
         res.json(allHotels.rows);
     } catch (err) {
         console.error(err);
@@ -676,10 +676,88 @@ app.get("/search-rooms", async (req, res) => {
     }
 })
 
+// Update Booking
+app.post('/update-booking', async (req, res) => {
+    const { bookingid, startdate, enddate, specialrequests, hotelid, roomnumber, customerid } = req.body;
+    console.log(req.body);
+
+    const query = {
+        text: `UPDATE booking SET startdate = $1, enddate = $2, specialrequests = $3, hotelid = $4, roomnumber = $5, customerid = $6 WHERE bookingid = $7`,
+        values: [startdate, enddate, specialrequests, hotelid, roomnumber, customerid, bookingid],
+    };
+
+    try {
+        await pool.query(setSchema);
+        await pool.query(query);
+        res.status(200).send('Booking updated successfully');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Something went wrong');
+    }
+});
+
+// Update Central Office
+app.post('/update-centraloffice', async (req, res) => {
+    const { officeid, officeaddress, chainname } = req.body;
+    console.log(req.body);
+
+    const query = {
+        text: `UPDATE centraloffice SET officeaddress = $1, chainname = $2 WHERE officeid = $3`,
+        values: [officeaddress, chainname, officeid],
+    };
+
+    try {
+        await pool.query(setSchema);
+        await pool.query(query);
+        res.status(200).send('Central Office updated successfully');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Something went wrong');
+    }
+});
+
+// Update Customer
+app.post('/update-customer', async (req, res) => {
+    const { customerid, sin, fullname, customeraddress, age, registrationdate, creditcardnumber } = req.body;
+    console.log(req.body);
+
+    const query = {
+        text: `UPDATE customer SET sin = $1, fullname = $2, customeraddress = $3, age = $4, registrationdate = $5, creditcardnumber = $6 WHERE customerid = $7`,
+        values: [sin, fullname, customeraddress, age, registrationdate, creditcardnumber, customerid],
+    };
+
+    try {
+        await pool.query(setSchema);
+        await pool.query(query);
+        res.status(200).send('Customer updated successfully');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Something went wrong');
+    }
+});
+
+// Update Employee
+app.post('/update-employee', async (req, res) => {
+    const { employeeid, sin, fullname, employeeaddress, age, hotelid } = req.body;
+    console.log(req.body);
+
+    const query = {
+        text: `UPDATE employee SET sin = $1, fullname = $2, employeeaddress = $3, age = $4, hotelid = $5 WHERE employeeid = $6`,
+        values: [sin, fullname, employeeaddress, age, hotelid, employeeid],
+    };
+
+    try {
+        await pool.query(setSchema);
+        await pool.query(query);
+        res.status(200).send('Employee updated successfully');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Something went wrong');
+    }
+});
 
 
-// update
-
+// Update Hotel
 app.post('/update-hotel', async (req, res) => {
     const { hotelid, hotelname, hoteladdress, stars, phonenumbers, contactemails, chainname } = req.body;
     console.log(req.body);
@@ -693,6 +771,86 @@ app.post('/update-hotel', async (req, res) => {
         await pool.query(setSchema);
         await pool.query(query);
         res.status(200).send('Hotel updated successfully');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Something went wrong');
+    }
+});
+
+// Update Hotel Chain
+app.post('/update-hotelchain', async (req, res) => {
+    const { chainname, numberhotels, phonenumbers, contactemails } = req.body;
+    console.log(req.body);
+
+    const query = {
+        text: `UPDATE hotelchain SET numberhotels = $1, phonenumbers = $2, contactemails = $3 WHERE chainname = $4`,
+        values: [numberhotels, phonenumbers, contactemails, chainname],
+    };
+
+    try {
+        await pool.query(setSchema);
+        await pool.query(query);
+        res.status(200).send('Hotel Chain updated successfully');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Something went wrong');
+    }
+});
+
+// Update Position
+app.post('/update-position', async (req, res) => {
+    const { title, salary, employeeid } = req.body;
+    console.log(req.body);
+
+    const query = {
+        text: `UPDATE position SET salary = $1, employeeid = $2 WHERE title = $3`,
+        values: [salary, employeeid, title],
+    };
+
+    try {
+        await pool.query(setSchema);
+        await pool.query(query);
+        res.status(200).send('Position updated successfully');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Something went wrong');
+    }
+});
+
+// Update Renting
+app.post('/update-renting', async (req, res) => {
+    const { rentingid, startdate, enddate, specialrequests, hotelid, roomnumber, customerid } = req.body;
+    console.log(req.body);
+
+    const query = {
+        text: `UPDATE renting SET startdate = $1, enddate = $2, specialrequests = $3, hotelid = $4, roomnumber = $5, customerid = $6 WHERE rentingid = $7`,
+        values: [startdate, enddate, specialrequests, hotelid, roomnumber, customerid, rentingid],
+    };
+
+    try {
+        await pool.query(setSchema);
+        await pool.query(query);
+        res.status(200).send('Renting updated successfully');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Something went wrong');
+    }
+});
+
+// Update Room
+app.post('/update-room', async (req, res) => {
+    const { roomnumber, price, occupied, amenities, extendable, view, issues, capacity, hotelid } = req.body;
+    console.log(req.body);
+
+    const query = {
+        text: `UPDATE room SET price = $1, occupied = $2, amenities = $3, extendable = $4, view = $5, issues = $6, capacity = $7, hotelid = $8 WHERE roomnumber = $9`,
+        values: [price, occupied, amenities, extendable, view, issues, capacity, hotelid, roomnumber],
+    };
+
+    try {
+        await pool.query(setSchema);
+        await pool.query(query);
+        res.status(200).send('Room updated successfully');
     } catch (error) {
         console.error(error);
         res.status(500).send('Something went wrong');

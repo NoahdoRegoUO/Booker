@@ -29,6 +29,7 @@ const ListHotelDatabase = () => {
 
             console.log(jsonData);
             getHotels();
+            
         } catch (err) {
             console.log(err.message);
         }
@@ -89,6 +90,8 @@ const ListHotelDatabase = () => {
                                         chainname: hotel.chainname
                                     }
                                 );
+
+                                window.location.reload();
                             }}>
                             Edit
                         </Button></td>
