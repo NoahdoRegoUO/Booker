@@ -32,3 +32,21 @@
 .dropdown {
     width: 100px;
 }
+
+.navbar-container {
+    position: absolute;
+    width: 98%;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    padding: 1%;
+}
+
+.row-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1%;
+}

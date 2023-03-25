@@ -1,11 +1,17 @@
 import React, { useState } from "react";
 
+import ListHotels from "./components/ListHotels.js"
+
 import './styles/CustomerHome.css';
 import './styles/globalStyles.css';
 
 import { Link } from "react-router-dom";
-
+import { Button } from "@mui/material";
+import SvgIcon from '@mui/material/SvgIcon';
 import Select from 'react-select';
+import { grey } from "@mui/material/colors";
+import { useNavigate } from "react-router-dom";
+
 
 const locationOptions = [
     { value: 'Ottawa', label: 'Ottawa' },
@@ -19,6 +25,33 @@ const starOptions = [
     { value: 3, label: '3 Stars' },
     { value: 4, label: '4 Stars' },
     { value: 5, label: '5 Stars' }
+]
+
+const hotelChainOptions = [
+    { value: 'Adfaces', label: 'Adfaces' },
+    { value: 'Trihotels', label: 'Trihotels' },
+    { value: 'Macos', label: 'Macos' },
+    { value: 'JetRocks', label: 'JetRocks' },
+    { value: 'Haiz', label: 'Haiz' },
+]
+
+const numRoomsOptions = [
+    { value: '<100', label: 'less than 100 rooms' },
+    { value: '100-250', label: '100-250 rooms' },
+    { value: '250-500', label: '250-500 rooms' },
+    { value: '>500', label: 'over 500 rooms' },
+]
+
+const roomCapacityOptions = [
+    { value: '1', label: '1 person' },
+    { value: '2-4', label: '2-4 people' },
+    { value: '>4', label: 'more than 4 people' },
+]
+
+const priceOptions = [
+    { value: '$', label: '$' },
+    { value: '$$', label: '$$' },
+    { value: '$$$', label: '$$$' },
 ]
 
 const selectCustomStyles = {
@@ -44,9 +77,28 @@ const selectCustomStyles = {
     }),
 };
 
+const HomeIcon = (props) => {
+    return (
+        <SvgIcon {...props}>
+            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+        </SvgIcon>
+    );
+}
+
 function CustomerHome() {
+    const navigate = useNavigate();
+
+    const loadHomePage = () => {
+        navigate("/")
+    }
+
     return (
         <div className="page-background">
+            <div className="navbar-container">
+                <Button className="home-button" variant="contained" aria-label="home" endIcon={<HomeIcon sx={{ color: grey[100] }} />} onClick={loadHomePage}>
+                    Home
+                </Button>
+            </div>
             <p className="title-text">Search Hotels</p>
             <div id="search-info">
                 <p className="subtitle-text" id="search-title">Hotel Information</p>
@@ -70,7 +122,7 @@ function CustomerHome() {
                     id="select-dropdown"
                     defaultValue={null}
                     placeholder="Chain"
-                    options={starOptions}
+                    options={hotelChainOptions}
                     styles={selectCustomStyles}
                     isSearchable={false}
                 />
@@ -81,7 +133,7 @@ function CustomerHome() {
                     id="select-dropdown"
                     defaultValue={null}
                     placeholder="Total Number of Rooms"
-                    options={starOptions}
+                    options={numRoomsOptions}
                     styles={selectCustomStyles}
                     isSearchable={false}
                 />
@@ -89,7 +141,7 @@ function CustomerHome() {
                     id="select-dropdown"
                     defaultValue={null}
                     placeholder="Room Capacity"
-                    options={starOptions}
+                    options={roomCapacityOptions}
                     styles={selectCustomStyles}
                     isSearchable={false}
                 />
@@ -97,11 +149,12 @@ function CustomerHome() {
                     id="select-dropdown"
                     defaultValue={null}
                     placeholder="Price Range"
-                    options={starOptions}
+                    options={priceOptions}
                     styles={selectCustomStyles}
                     isSearchable={false}
                 />
             </div>
+            <ListHotels></ListHotels>
         </div>
     );
 }
