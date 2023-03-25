@@ -151,10 +151,12 @@ app.post("/insert-archives", async (req, res) => {
     const highestarchiveid = await pool.query('SELECT MAX(archiveid) FROM archive');
     const nextArchiveID = highestarchiveid.rows[0].max + 1;
 
+    const srArray = `{${specialrequests.join(',')}}`;
+
 
     const query = {
         text: 'INSERT into archive(archiveid, archivetype, startdate, enddate, specialrequests, hotelid, roomnumber, customerid) VALUES ($1, $2, $3, $4, $5, $6, $7)',
-        values: [nextArchiveID, archivetype, startdate, enddate, specialRequests, hotelid, roomnumber, customerid],
+        values: [nextArchiveID, archivetype, startdate, enddate, srArray, hotelid, roomnumber, customerid],
     };
 
     try{
@@ -173,10 +175,12 @@ app.post("/insert-bookings", async (req, res) => {
     // Get the highest current bookingid
     const highestbookingid = await pool.query('SELECT MAX(bookingid) FROM booking');
     const nextBookingID = highestbookingid.rows[0].max + 1;
+
+    const srArray = `{${specialrequests.join(',')}}`;
     
     const query = {
       text: `INSERT INTO booking(bookingid, startdate, enddate, specialrequests, hotelid, roomnumber, customerid) VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-      values: [nextBookingID, startdate, enddate, specialrequests, hotelid, roomnumber, customerid],
+      values: [nextBookingID, startdate, enddate, srArray, hotelid, roomnumber, customerid],
     };
 
     try {
@@ -261,10 +265,13 @@ app.post('/insert-hotels', async (req, res) => {
     try {
       const result = await pool.query("SELECT MAX(hotelid) AS highest_hotelid FROM hotel");
       const newHotelId = result.rows[0].highest_hotelid + 1;
+
+      const pnArray = `{${phonenumbers.join(',')}}`;
+      const ceArray = `{${contactemails.join(',')}}`;
   
       const insertQuery = {
         text: 'INSERT INTO hotel(hotelid, hotelname, hoteladdress, stars, phonenumbers, contactemails, chainname) VALUES ($1, $2, $3, $4, $5, $6, $7)',
-        values: [newHotelId, hotelname, hoteladdress, stars, phonenumbers, contactemails, chainname],
+        values: [newHotelId, hotelname, hoteladdress, stars, pnArray, ceArray, chainname],
       };
       await pool.query(setSchema);
       await pool.query(insertQuery);
@@ -278,10 +285,13 @@ app.post('/insert-hotels', async (req, res) => {
 // Insert Hotel Chains
 app.post('/insert-hotelchains', async (req, res) => {
     const {chainname, numberhotels, phonenumbers, contactemails} = req.body;
+
+    const pnArray = `{${phonenumbers.join(',')}}`;
+    const ceArray = `{${contactemails.join(',')}}`;
     
     const query = {
       text: `INSERT INTO hotelchain(chainname, numberhotels, phonenumbers, contactemails) VALUES ($1, $2, $3, $4)`,
-      values: [chainname, numberhotels, phonenumbers, contactemails],
+      values: [chainname, numberhotels, pnArray, ceArray],
     };
 
     try {
@@ -311,10 +321,12 @@ app.post("/insert-rentings", async (req, res) => {
     // Get the highest current rentingid
     const highestrentingid = await pool.query('SELECT MAX(rentingid) FROM renting');
     const nextRentingID = highestrentingid.rows[0].max + 1;
+
+    const srArray = `{${specialrequests.join(',')}}`;
     
     const query = {
       text: `INSERT INTO renting(rentingid, startdate, enddate, specialrequests, hotelid, roomnumber, customerid) VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-      values: [nextRentingID, startdate, enddate, specialrequests, hotelid, roomnumber, customerid],
+      values: [nextRentingID, startdate, enddate, sr, hotelid, roomnumber, customerid],
     };
 
     try {
@@ -334,9 +346,12 @@ app.post("insert-rooms", async (req, res) => {
     const roomnumber = await pool.query('SELECT MAX(roomnumber) FROM roomnumber');
     const newRN = roomnumber.rows[0].max + 1;
 
+    const amenitiesArray = `{${amenities.join(',')}}`;
+    const issuesArray = `{${issues.join(',')}}`;
+
     const query = {
         text: `INSERT INTO room(roomnumber, price, occupied, amenities, extendable, view, issues, capacity, hotelid) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
-        values: [newRN, price, occupied, amenities, extendable, view, issues, capacity, hotelid],
+        values: [newRN, price, occupied, amenitiesArray, extendable, view, issuesArray, capacity, hotelid],
     };
 
     try {
