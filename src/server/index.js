@@ -145,7 +145,7 @@ app.get("/get-rooms", async (req, res) => {
 
 // Insert Archive
 app.post("/insert-archives", async (req, res) => {
-    const {archivetype, startdate, enddate, specialRequests, hotelid, roomnumber, customerid} = req.body;
+    const {archivetype, startdate, enddate, specialrequests, hotelid, roomnumber, customerid} = req.body;
 
     // Get the highest current archiveid
     const highestarchiveid = await pool.query('SELECT MAX(archiveid) FROM archive');
