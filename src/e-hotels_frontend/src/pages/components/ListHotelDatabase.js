@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Button } from "@mui/material";
 
 const ListHotelDatabase = () => {
 
@@ -22,7 +23,7 @@ const ListHotelDatabase = () => {
     console.log(hotelData);
 
     return (
-        <table style={{ width: "90%" }}>
+        <table style={{ width: "80%", overflow: "scroll" }}>
             <thead>
                 <tr className="subtitle-text">
                     <th>ID</th>
@@ -32,6 +33,8 @@ const ListHotelDatabase = () => {
                     <th>Phone Numbers</th>
                     <th>Contact Emails</th>
                     <th>Hotel Chain</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
                 </tr>
             </thead>
             <tbody>
@@ -53,6 +56,8 @@ const ListHotelDatabase = () => {
                         <td>{hotel.phonenumbers}</td>
                         <td>{hotel.contactemails}</td>
                         <td>{hotel.chainname}</td>
+                        <td><Button variant="contained" color="success">Edit</Button></td>
+                        <td><Button variant="contained" color="error">Delete</Button></td>
                     </tr >
                 ))}
             </tbody>
