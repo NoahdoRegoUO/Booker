@@ -1,3 +1,7 @@
+td {
+    padding: 1vmin;
+}
+
 .page-background {
     text-align: center;
     background: linear-gradient(-45deg, #1B49BE, #8734C8 60%);
