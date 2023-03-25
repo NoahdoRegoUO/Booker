@@ -22,7 +22,7 @@ const ListHotelDatabase = () => {
     console.log(hotelData);
 
     return (
-        <table style={{ width: "90%" }}>
+        <table style={{ width: "80%", overflow: "scroll" }}>
             <thead>
                 <tr className="subtitle-text">
                     <th>ID</th>
