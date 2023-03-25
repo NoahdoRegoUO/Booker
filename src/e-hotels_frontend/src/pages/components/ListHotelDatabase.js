@@ -16,6 +16,24 @@ const ListHotelDatabase = () => {
         }
     }
 
+    const updateHotel = async (data) => {
+        try {
+            const response = await fetch("http://localhost:8080/update-hotel", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            });
+            const jsonData = await response.json();
+
+            console.log(jsonData);
+            getHotels();
+        } catch (err) {
+            console.log(err.message);
+        }
+    }
+
     useEffect(() => {
         getHotels();
     }, []);
@@ -56,7 +74,24 @@ const ListHotelDatabase = () => {
                         <td>{hotel.phonenumbers}</td>
                         <td>{hotel.contactemails}</td>
                         <td>{hotel.chainname}</td>
-                        <td><Button variant="contained" color="success">Edit</Button></td>
+                        <td><Button
+                            variant="contained"
+                            color="success"
+                            onClick={() => {
+                                updateHotel(
+                                    {
+                                        hotelid: hotel.hotelid,
+                                        hotelname: "BINGUS",
+                                        hoteladdress: hotel.hoteladdress,
+                                        stars: hotel.stars,
+                                        phonenumbers: hotel.phonenumbers,
+                                        contactemails: hotel.contactemails,
+                                        chainname: hotel.chainname
+                                    }
+                                );
+                            }}>
+                            Edit
+                        </Button></td>
                         <td><Button variant="contained" color="error">Delete</Button></td>
                     </tr >
                 ))}

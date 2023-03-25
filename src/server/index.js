@@ -682,12 +682,16 @@ app.get("/search-rooms", async (req, res) => {
 
 app.post('/update-hotel', async (req, res) => {
     const { hotelid, hotelname, hoteladdress, stars, phonenumbers, contactemails, chainname } = req.body;
+    console.log(req.body);
+
+    const query = {
+        text: `UPDATE Hotel SET hotelname = $1, hoteladdress = $2, stars = $3, phonenumbers = $4, contactemails = $5, chainname = $6 WHERE hotelid = $7`,
+        values: [hotelname, hoteladdress, stars, phonenumbers, contactemails, chainname, hotelid],
+    };
 
     try {
-        await pool.query(
-            "UPDATE hotels SET hotelname = $1, hoteladdress = $2, stars = $3, phonenumbers = $4, contactemails = $5, chainname = $6 WHERE hotelid = $7"
-            [hotelname, hoteladdress, stars, phonenumbers, contactemails, chainname, hotelid]
-        );
+        await pool.query(setSchema);
+        await pool.query(query);
         res.status(200).send('Hotel updated successfully');
     } catch (error) {
         console.error(error);
