@@ -7,6 +7,12 @@ import { Link } from "react-router-dom";
 
 import Select from 'react-select';
 
+const locationOptions = [
+    { value: 'Ottawa', label: 'Ottawa' },
+    { value: 'Toronto', label: 'Toronto' },
+    { value: 'Montreal', label: 'Montreal' },
+]
+
 const starOptions = [
     { value: 1, label: '1 Star' },
     { value: 2, label: '2 Stars' },
@@ -48,7 +54,7 @@ function CustomerHome() {
                     id="select-dropdown"
                     defaultValue={null}
                     placeholder="Location"
-                    options={starOptions}
+                    options={locationOptions}
                     styles={selectCustomStyles}
                     isSearchable={false}
                 />
