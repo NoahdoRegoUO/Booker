@@ -12,7 +12,7 @@ const ListHotelDatabase = () => {
     const [hotelData, setHotelData] = useState([]);
     const [displayDialog, setDisplayDialog] = useState(false);
 
-    const [typeOfEdit, setTypeOfEdit] = useState("")
+    const [typeOfEdit, setTypeOfEdit] = useState("done");
     const [currentID, setCurrentID] = useState(null);
     const [editName, setEditName] = useState("");
     const [editAddress, setEditAddress] = useState("");
@@ -24,6 +24,10 @@ const ListHotelDatabase = () => {
     const openDialog = (rowID) => {
         setDisplayDialog(true);
         setCurrentID(rowID);
+    }
+
+    const openAddDialog = () => {
+        setDisplayDialog(true);
     }
 
     const closeDialog = () => {
@@ -47,9 +51,9 @@ const ListHotelDatabase = () => {
                 chainname: newChainname
             }
 
-            if (typeOfEdit = "add") {
+            if (typeOfEdit === "add") {
                 addHotel(hotelInfo);
-            } else if (typeOfEdit = "edit") {
+            } else if (typeOfEdit === "edit") {
                 updateHotel(hotelInfo);
             }
             setDisplayDialog(false);
@@ -72,7 +76,7 @@ const ListHotelDatabase = () => {
 
     const addHotel = async (data) => {
         try {
-            const response = await fetch("http://localhost:8080/update-hotel", {
+            const response = await fetch("http://localhost:8080/insert-hotels", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -147,11 +151,7 @@ const ListHotelDatabase = () => {
                 color="success"
                 onClick={() => {
                     setTypeOfEdit("add");
-                    let currentID = 1;
-                    hotelData.map(hotel => (
-                        hotel.hotelid > currentID ? currentID = hotel.hotelid : currentID
-                    ));
-                    openDialog(currentID + 1);
+                    openAddDialog();
                 }}>Add Data</Button>
             <table style={{ width: "80%", overflow: "scroll" }}>
                 <thead>
@@ -283,7 +283,7 @@ const ListHotelDatabase = () => {
                 </DialogContent>
                 <DialogActions>
                     <Button variant="contained" color="error" onClick={closeDialog}>Cancel</Button>
-                    <Button variant="contained" color="success" onClick={() => { submitDialog(currentID, editName, editAddress, editStars, editPhoneNums, editEmails, editChainName) }}>Done</Button>
+                    <Button variant="contained" color="success" onClick={() => { submitDialog(currentID, editName, editAddress, editStars, editPhoneNums, editEmails, editChainName) }}>{typeOfEdit}</Button>
                 </DialogActions>
             </Dialog>
         </>

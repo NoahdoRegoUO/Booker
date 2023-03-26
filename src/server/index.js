@@ -270,10 +270,10 @@ app.post('/insert-hotels', async (req, res) => {
         const ceArray = `{${contactemails.join(',')}}`;
 
         const insertQuery = {
-            text: 'INSERT INTO hotel(hotelid, hotelname, hoteladdress, stars, phonenumbers, contactemails, chainname) VALUES ($1, $2, $3, $4, $5, $6, $7)',
+            text: `INSERT INTO Hotel VALUES ($1, $2, $3, $4, $5, $6, $7)`,
             values: [newHotelId, hotelname, hoteladdress, stars, pnArray, ceArray, chainname],
         };
-        await pool.query(setSchema);
+        //await pool.query(setSchema);
         await pool.query(insertQuery);
         res.send('Hotel Inserted Successfully');
     } catch (err) {
