@@ -83,6 +83,25 @@ const ListHotelDatabase = () => {
         }
     }
 
+    const deleteHotel = async (data) => {
+        try {
+            const response = await fetch("http://localhost:8080/delete-hotel", {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            });
+            const jsonData = await response.json();
+
+            console.log(jsonData);
+            getHotels();
+
+        } catch (err) {
+            console.log(err.message);
+        }
+    }
+
     useEffect(() => {
         getHotels();
         setCurrentID(null);
@@ -130,7 +149,15 @@ const ListHotelDatabase = () => {
                                 }}>
                                 Edit
                             </Button></td>
-                            <td><Button variant="contained" color="error">Delete</Button></td>
+                            <td><Button
+                                variant="contained"
+                                color="error"
+                                onClick={() => {
+                                    deleteHotel({ hotelid: hotel.hotelid });
+                                    window.location.reload();
+                                }}>
+                                Delete
+                            </Button></td>
                         </tr >
                     ))}
                 </tbody>

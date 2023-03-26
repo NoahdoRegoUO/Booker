@@ -859,6 +859,24 @@ app.post('/update-room', async (req, res) => {
 
 // delete
 
+app.delete('/delete-hotel', async (req, res) => {
+    const { hotelid } = req.body;
+
+    const query = {
+        text: `DELETE FROM hotel WHERE hotelid = $1`,
+        values: [hotelid],
+    };
+
+    try {
+        await pool.query(setSchema);
+        await pool.query(query);
+        res.status(200).send('Hotel deleted successfully');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Something went wrong');
+    }
+});
+
 app.listen(8080, () => {
     console.log("Server started on port 8080.");
 })
