@@ -857,8 +857,83 @@ app.post('/update-room', async (req, res) => {
     }
 });
 
-// delete
+// Delete Booking
+app.delete('/delete-booking', async (req, res) => {
+    const { bookingid } = req.body;
 
+    const query = {
+        text: `DELETE FROM booking WHERE bookingid = $1`,
+        values: [bookingid],
+    };
+
+    try {
+        await pool.query(setSchema);
+        await pool.query(query);
+        res.status(200).send('Booking deleted successfully');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Something went wrong');
+    }
+});
+
+// Delete Central Office
+app.delete('/delete-centraloffice', async (req, res) => {
+    const { officeid } = req.body;
+
+    const query = {
+        text: `DELETE FROM centraloffice WHERE officeid = $1`,
+        values: [officeid],
+    };
+
+    try {
+        await pool.query(setSchema);
+        await pool.query(query);
+        res.status(200).send('Central Office deleted successfully');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Something went wrong');
+    }
+});
+
+// Delete Customer
+app.delete('/delete-customer', async (req, res) => {
+    const { customerid } = req.body;
+
+    const query = {
+        text: `DELETE FROM customer WHERE customerid = $1`,
+        values: [customerid],
+    };
+
+    try {
+        await pool.query(setSchema);
+        await pool.query(query);
+        res.status(200).send('Customer deleted successfully');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Something went wrong');
+    }
+});
+
+// Delete Employee
+app.delete('/delete-employee', async (req, res) => {
+    const { employeeid } = req.body;
+
+    const query = {
+        text: `DELETE FROM employee WHERE employeeid = $1`,
+        values: [employeeid],
+    };
+
+    try {
+        await pool.query(setSchema);
+        await pool.query(query);
+        res.status(200).send('Employee deleted successfully');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Something went wrong');
+    }
+});
+
+// Delete Hotel
 app.delete('/delete-hotel', async (req, res) => {
     const { hotelid } = req.body;
 
@@ -871,6 +946,82 @@ app.delete('/delete-hotel', async (req, res) => {
         await pool.query(setSchema);
         await pool.query(query);
         res.status(200).send('Hotel deleted successfully');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Something went wrong');
+    }
+});
+
+// Delete Hotel Chain
+app.delete('/delete-hotelchain', async (req, res) => {
+    const { chainname } = req.body;
+
+    const query = {
+        text: `DELETE FROM hotelchain WHERE chainname = $1`,
+        values: [chainname],
+    };
+
+    try {
+        await pool.query(setSchema);
+        await pool.query(query);
+        res.status(200).send('Hotel Chain deleted successfully');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Something went wrong');
+    }
+});
+
+// Delete Position
+app.delete('/delete-position', async (req, res) => {
+    const { title } = req.body;
+
+    const query = {
+        text: `DELETE FROM position WHERE title = $1`,
+        values: [title],
+    };
+
+    try {
+        await pool.query(setSchema);
+        await pool.query(query);
+        res.status(200).send('Position deleted successfully');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Something went wrong');
+    }
+});
+
+// Delete Renting
+app.delete('/delete-renting', async (req, res) => {
+    const { rentingid } = req.body;
+
+    const query = {
+        text: `DELETE FROM renting WHERE rentingid = $1`,
+        values: [rentingid],
+    };
+
+    try {
+        await pool.query(setSchema);
+        await pool.query(query);
+        res.status(200).send('Renting deleted successfully');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Something went wrong');
+    }
+});
+
+// Delete Room
+app.delete('/delete-room', async (req, res) => {
+    const { roomnumber } = req.body;
+
+    const query = {
+        text: `DELETE FROM room WHERE roomnumber = $1`,
+        values: [roomnumber],
+    };
+
+    try {
+        await pool.query(setSchema);
+        await pool.query(query);
+        res.status(200).send('Room deleted successfully');
     } catch (error) {
         console.error(error);
         res.status(500).send('Something went wrong');
