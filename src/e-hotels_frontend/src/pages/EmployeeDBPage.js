@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 
 import './styles/globalStyles.css';
+import './styles/EmployeeDBPage.css';
 import ListHotelDatabase from "./components/ListHotelDatabase";
 
 import { Button } from "@mui/material";
 import SvgIcon from '@mui/material/SvgIcon';
 import { grey } from "@mui/material/colors";
 import { useNavigate } from "react-router-dom";
+import Select from 'react-select';
 
 const HomeIcon = (props) => {
     return (
@@ -16,11 +18,69 @@ const HomeIcon = (props) => {
     );
 }
 
+const selectCustomStyles = {
+    option: (defaultStyles) => ({
+        ...defaultStyles,
+        color: "#1f1f1f",
+        backgroundColor: "#f2f2f2",
+        fontSize: "2vmin",
+    }),
+    control: (defaultStyles) => ({
+        ...defaultStyles,
+        color: "#1f1f1f",
+        backgroundColor: "#f2f2f2",
+        padding: "5px",
+        border: "none",
+        boxShadow: "none",
+        fontSize: "2vmin",
+    }),
+    singleValue: (defaultStyles) => ({
+        ...defaultStyles,
+        color: "#1f1f1f",
+        fontSize: "2vmin"
+    }),
+};
+
+const dataOptions = [
+    { value: 'centraloffice', label: 'Central Office' },
+    { value: 'customer', label: 'Customer' },
+    { value: 'employee', label: 'Employee' },
+    { value: 'hotel', label: 'Hotel' },
+    { value: 'hotelchain', label: 'Hotel Chain' },
+    { value: 'position', label: 'Position' },
+    { value: 'room', label: 'Room' }
+]
+
 function EmployeeDBPage() {
     const navigate = useNavigate();
+    const [selectedData, setSelectedData] = useState(null);
 
     const loadHomePage = () => {
         navigate("/")
+    }
+
+    const handleDataSelect = e => {
+        setSelectedData(e.value);
+    };
+
+    function DataDisplay() {
+        if (selectedData === null) {
+            return <p className="subtitle-text">Select data type above</p>
+        } else if (selectedData === "centraloffice") {
+            return <p className="subtitle-text">{selectedData}</p>
+        } else if (selectedData === "customer") {
+            return <p className="subtitle-text">{selectedData}</p>
+        } else if (selectedData === "employee") {
+            return <p className="subtitle-text">{selectedData}</p>
+        } else if (selectedData === "hotel") {
+            return <ListHotelDatabase></ListHotelDatabase>
+        } else if (selectedData === "hotelchain") {
+            return <p className="subtitle-text">{selectedData}</p>
+        } else if (selectedData === "position") {
+            return <p className="subtitle-text">{selectedData}</p>
+        } else if (selectedData === "room") {
+            return <p className="subtitle-text">{selectedData}</p>
+        }
     }
 
     return (
@@ -31,7 +91,19 @@ function EmployeeDBPage() {
                 </Button>
             </div>
             <p className="title-text">Edit Database</p>
-            <ListHotelDatabase></ListHotelDatabase>
+            <Select
+                id="select-dropdown"
+                defaultValue={null}
+                placeholder="Data"
+                options={dataOptions}
+                onChange={handleDataSelect}
+                value={dataOptions.filter(function (option) {
+                    return option.value === selectedData;
+                })}
+                styles={selectCustomStyles}
+                isSearchable={true}
+            />
+            <DataDisplay></DataDisplay>
         </div>
     )
 };
