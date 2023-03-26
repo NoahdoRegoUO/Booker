@@ -37,7 +37,7 @@ app.post("/testtable", async (req, res) => {
 app.get("/get-archives", async (req, res) => {
     try {
         await pool.query(setSchema);
-        const archiveData = await pool.query("SELECT * FROM archive");
+        const archiveData = await pool.query("SELECT * FROM archive ORDER BY archiveid asc");
         res.json(archiveData.rows);
     } catch (err) {
         console.error(err);
@@ -48,7 +48,7 @@ app.get("/get-archives", async (req, res) => {
 app.get("/get-bookings", async (req, res) => {
     try {
         await pool.query(setSchema);
-        const allBookings = await pool.query("SELECT * FROM booking");
+        const allBookings = await pool.query("SELECT * FROM booking ORDER BY bookingid asc");
         res.json(allBookings.rows);
     } catch (err) {
         console.error(err);
@@ -70,7 +70,7 @@ app.get("/get-central-offices", async (req, res) => {
 app.get("/get-customers", async (req, res) => {
     try {
         await pool.query(setSchema);
-        const allCustomers = await pool.query("SELECT * FROM customer");
+        const allCustomers = await pool.query("SELECT * FROM customer ORDER BY customerid asc");
         res.json(allCustomers.rows);
     } catch (err) {
         console.error(err);
@@ -81,7 +81,7 @@ app.get("/get-customers", async (req, res) => {
 app.get("/get-employees", async (req, res) => {
     try {
         await pool.query(setSchema);
-        const allEmployees = await pool.query("SELECT * FROM employee");
+        const allEmployees = await pool.query("SELECT * FROM employee ORDER BY employeeid asc");
         res.json(allEmployees.rows);
     } catch (err) {
         console.error(err);
@@ -125,7 +125,7 @@ app.get("/get-positions", async (req, res) => {
 app.get("/get-rentings", async (req, res) => {
     try {
         await pool.query(setSchema);
-        const allRentings = await pool.query("SELECT * FROM renting");
+        const allRentings = await pool.query("SELECT * FROM renting ORDER BY rentingid asc");
         res.json(allRentings.rows);
     } catch (err) {
         console.error(err);
@@ -136,7 +136,7 @@ app.get("/get-rentings", async (req, res) => {
 app.get("/get-rooms", async (req, res) => {
     try {
         await pool.query(setSchema);
-        const allRooms = await pool.query("SELECT * FROM room");
+        const allRooms = await pool.query("SELECT * FROM room ORDER BY roomid asc");
         res.json(allRooms.rows);
     } catch (err) {
         console.error(err);
