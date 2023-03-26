@@ -4,7 +4,7 @@ SET SEARCH_PATH = 'ehotels_db';
 -- Command for creating hotel chain table
 CREATE TABLE HotelChain (
     ChainName TEXT NOT NULL PRIMARY KEY,
-	NumberHotels INT NOT NULL CHECK (NumberHotels > 0),
+	NumberHotels INT NOT NULL,
 	PhoneNumbers TEXT[],
 	ContactEmails TEXT[]);
 

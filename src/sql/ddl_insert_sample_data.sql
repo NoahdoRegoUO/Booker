@@ -3,19 +3,19 @@ SET SEARCH_PATH = 'ehotels_db';
 
 -- Commands for test Hotel Chain data
 INSERT INTO hotelchain(chainname, numberhotels, phonenumbers, contactemails) 
-VALUES ('Adfaces', 8, ARRAY['6132735652'], ARRAY['adfaces@gmail.com', 'adfacessupport@gmail.com']);
+VALUES ('Adfaces', 0, ARRAY['6132735652'], ARRAY['adfaces@gmail.com', 'adfacessupport@gmail.com']);
 
 INSERT INTO hotelchain(chainname, numberhotels, phonenumbers, contactemails) 
-VALUES ('Trihotels', 9, ARRAY['6132903111'], ARRAY['trihotels@gmail.com', 'trihotelssupport@gmail.com']);
+VALUES ('Trihotels', 0, ARRAY['6132903111'], ARRAY['trihotels@gmail.com', 'trihotelssupport@gmail.com']);
 
 INSERT INTO hotelchain(chainname, numberhotels, phonenumbers, contactemails) 
-VALUES ('Macos', 8, ARRAY['4169493425'], ARRAY['macos@gmail.com', 'macossupport@gmail.com']);
+VALUES ('Macos', 0, ARRAY['4169493425'], ARRAY['macos@gmail.com', 'macossupport@gmail.com']);
 
 INSERT INTO hotelchain(chainname, numberhotels, phonenumbers, contactemails) 
-VALUES ('JetRocks', 10, ARRAY['4160239432'], ARRAY['jetrocks@gmail.com', 'jetrockssupport@gmail.com']);
+VALUES ('JetRocks', 0, ARRAY['4160239432'], ARRAY['jetrocks@gmail.com', 'jetrockssupport@gmail.com']);
 
 INSERT INTO hotelchain(chainname, numberhotels, phonenumbers, contactemails) 
-VALUES ('Haiz', 9, ARRAY['4165924039'], ARRAY['haiz@gmail.com', 'haizsupport@gmail.com']);
+VALUES ('Haiz', 0, ARRAY['4165924039'], ARRAY['haiz@gmail.com', 'haizsupport@gmail.com']);
 
 -- Commands for test Central Office data
 INSERT INTO centraloffice(officeid, officeaddress, chainname)
