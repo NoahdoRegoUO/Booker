@@ -148,6 +148,7 @@ app.post("/insert-archives", async (req, res) => {
     const { archivetype, startdate, enddate, specialrequests, hotelid, roomnumber, customerid } = req.body;
 
     // Get the highest current archiveid
+    await pool.query(setSchema);
     const highestarchiveid = await pool.query('SELECT MAX(archiveid) FROM archive');
     const nextArchiveID = highestarchiveid.rows[0].max + 1;
 
@@ -173,6 +174,7 @@ app.post("/insert-bookings", async (req, res) => {
     const { startdate, enddate, specialrequests, hotelid, roomnumber, customerid } = req.body;
 
     // Get the highest current bookingid
+    await pool.query(setSchema);
     const highestbookingid = await pool.query('SELECT MAX(bookingid) FROM booking');
     const nextBookingID = highestbookingid.rows[0].max + 1;
 
@@ -218,6 +220,7 @@ app.post("/insert-customers", async (req, res) => {
         const { sin, fullname, customeraddress, age, registrationdate, creditcardnumber } = req.body;
 
         // Get the highest current customerid
+        await pool.query(setSchema);
         const highestCustomerIdResult = await pool.query('SELECT MAX(customerid) FROM customer');
         const nextCustomerId = highestCustomerIdResult.rows[0].max + 1;
 
@@ -241,6 +244,7 @@ app.post("/insert-employees", async (req, res) => {
         const { sin, fullname, employeeaddress, age, hotelid } = req.body;
 
         // Get the highest current employeeid
+        await pool.query(setSchema);
         const employeeIdResult = await pool.query("SELECT MAX(employeeid) FROM employee");
         const employeeId = employeeIdResult.rows[0].max + 1;
 
@@ -263,17 +267,20 @@ app.post('/insert-hotels', async (req, res) => {
     const { hotelname, hoteladdress, stars, phonenumbers, contactemails, chainname } = req.body;
 
     try {
-        const result = await pool.query("SELECT MAX(hotelid) AS highest_hotelid FROM hotel");
-        const newHotelId = result.rows[0].highest_hotelid + 1;
+        await pool.query(setSchema);
+        const result = await pool.query(`SELECT MAX(hotelid) FROM hotel`);
+        const newHotelId = result.rows[0].max + 1;
+
+        console.log(newHotelId);
 
         const pnArray = `{${phonenumbers.join(',')}}`;
         const ceArray = `{${contactemails.join(',')}}`;
 
         const insertQuery = {
-            text: `INSERT INTO Hotel VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+            text: `INSERT INTO hotel(hotelid, hotelname, hoteladdress, stars, phonenumbers, contactemails, chainname) VALUES ($1, $2, $3, $4, $5, $6, $7)`,
             values: [newHotelId, hotelname, hoteladdress, stars, pnArray, ceArray, chainname],
         };
-        //await pool.query(setSchema);
+        await pool.query(setSchema);
         await pool.query(insertQuery);
         res.send('Hotel Inserted Successfully');
     } catch (err) {
@@ -326,7 +333,7 @@ app.post("/insert-rentings", async (req, res) => {
 
     const query = {
         text: `INSERT INTO renting(rentingid, startdate, enddate, specialrequests, hotelid, roomnumber, customerid) VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-        values: [nextRentingID, startdate, enddate, sr, hotelid, roomnumber, customerid],
+        values: [nextRentingID, startdate, enddate, srArray, hotelid, roomnumber, customerid],
     };
 
     try {
@@ -343,6 +350,7 @@ app.post("/insert-rentings", async (req, res) => {
 app.post("insert-rooms", async (req, res) => {
     const { price, occupied, amenities, extendable, view, issues, capacity, hotelid } = req.body;
 
+    await pool.query(setSchema);
     const roomnumber = await pool.query('SELECT MAX(roomnumber) FROM roomnumber');
     const newRN = roomnumber.rows[0].max + 1;
 
