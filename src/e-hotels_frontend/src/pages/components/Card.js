@@ -1,16 +1,16 @@
 import React from 'react';
 
-const Card = ({ image, title, description, action }) => {
+const Card = ({ image, title, description, description2, description3, action }) => {
     return (
         <div style={{
-            width: '300px',
-            height: '400px',
+            width: '320px',
+            height: '450px',
             border: '0px solid gray',
             backgroundColor: 'white',
             borderRadius: '20px',
             overflow: 'hidden',
             display: 'flex',
-            margin: "1%",
+            margin: "1vmin",
             cursor: "pointer",
             flexDirection: 'column'
         }} onClick={action}>
@@ -20,7 +20,7 @@ const Card = ({ image, title, description, action }) => {
                 objectFit: 'cover'
             }} />
             <div style={{
-                padding: '20px',
+                padding: '1px',
                 display: 'flex',
                 flexDirection: 'column'
             }}>
@@ -28,14 +28,26 @@ const Card = ({ image, title, description, action }) => {
                     fontSize: '24px',
                     fontWeight: 'bold',
                     color: '#1f1f1f',
-                    marginBottom: '10px'
+                    marginBottom: '1px'
                 }}>{title}</h2>
                 <p style={{
                     fontSize: '18px',
                     fontWeight: 'bold',
                     color: '#1f1f1f',
-                    marginBottom: '10px'
+                    marginBottom: '1px'
                 }}>{description}</p>
+                <p style={{
+                    fontSize: '18px',
+                    fontWeight: 'bold',
+                    color: '#1f1f1f',
+                    marginBottom: '1px'
+                }}>{description2}</p>
+                <p style={{
+                    fontSize: '18px',
+                    fontWeight: 'bold',
+                    color: '#1f1f1f',
+                    marginBottom: '10px'
+                }}>{description3}</p>
             </div>
         </div>
     );

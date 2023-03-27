@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import ListHotels from "./components/ListHotels.js"
+import ListHotelCards from "./components/ListHotelCards.js"
 
 import './styles/CustomerHome.css';
 import './styles/globalStyles.css';
@@ -154,7 +154,9 @@ function CustomerHome() {
                     isSearchable={false}
                 />
             </div>
-            <ListHotels></ListHotels>
+            <div style={{ alignItems: "center" }}>
+                <ListHotelCards></ListHotelCards>
+            </div>
         </div>
     );
 }
