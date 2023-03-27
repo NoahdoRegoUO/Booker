@@ -44,7 +44,7 @@ const ListPositionDatabase = () => {
             }
 
             const addPositionInfo = {
-                nTitle: newTitle,
+                newTitle: newTitle,
                 salary: newSalary,
                 employeeid: newEID
             }

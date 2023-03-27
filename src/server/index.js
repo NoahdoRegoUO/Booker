@@ -317,7 +317,7 @@ app.post('/insert-hotelchains', async (req, res) => {
 });
 
 // Insert Positions
-app.post('insert-positions', async (req, res) => {
+app.post('/insert-positions', async (req, res) => {
     const { newTitle, salary, employeeid } = req.body;
 
     const query = {
