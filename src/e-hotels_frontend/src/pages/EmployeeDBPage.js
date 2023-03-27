@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import Select from 'react-select';
 import ListEmployeeDatabase from "./components/ListEmployeeDatabase";
 import ListHotelChainDatabase from "./components/ListHotelChainDatabase";
+import ListRoomDatabase from "./components/ListRoomDatabase";
 
 const HomeIcon = (props) => {
     return (
@@ -84,7 +85,7 @@ function EmployeeDBPage() {
         } else if (selectedData === "position") {
             return <ListPositionDatabase></ListPositionDatabase>
         } else if (selectedData === "room") {
-            return <p className="subtitle-text">{selectedData}</p>
+            return <ListRoomDatabase></ListRoomDatabase>
         }
     }
 

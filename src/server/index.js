@@ -136,7 +136,7 @@ app.get("/get-rentings", async (req, res) => {
 app.get("/get-rooms", async (req, res) => {
     try {
         await pool.query(setSchema);
-        const allRooms = await pool.query("SELECT * FROM room ORDER BY roomid asc");
+        const allRooms = await pool.query("SELECT * FROM room ORDER BY roomnumber asc");
         res.json(allRooms.rows);
     } catch (err) {
         console.error(err);
@@ -364,7 +364,7 @@ app.post("/insert-rooms", async (req, res) => {
     const { price, occupied, amenities, extendable, view, issues, capacity, hotelid } = req.body;
 
     await pool.query(setSchema);
-    const roomnumber = await pool.query('SELECT MAX(roomnumber) FROM roomnumber');
+    const roomnumber = await pool.query('SELECT MAX(roomnumber) FROM room');
     const newRN = roomnumber.rows[0].max + 1;
 
     const amenitiesArray = `{${amenities.join(',')}}`;
