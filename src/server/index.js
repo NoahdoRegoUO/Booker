@@ -360,7 +360,7 @@ app.post("/insert-rentings", async (req, res) => {
 });
 
 // Insert Room
-app.post("insert-rooms", async (req, res) => {
+app.post("/insert-rooms", async (req, res) => {
     const { price, occupied, amenities, extendable, view, issues, capacity, hotelid } = req.body;
 
     await pool.query(setSchema);
