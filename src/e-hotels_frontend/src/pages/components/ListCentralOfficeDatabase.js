@@ -7,18 +7,14 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-const ListHotelDatabase = () => {
+const ListCentralOfficeDatabase = () => {
 
-    const [hotelData, setHotelData] = useState([]);
+    const [officeData, setOfficeData] = useState([]);
     const [displayDialog, setDisplayDialog] = useState(false);
 
     const [typeOfEdit, setTypeOfEdit] = useState("done");
     const [currentID, setCurrentID] = useState(null);
-    const [editName, setEditName] = useState("");
     const [editAddress, setEditAddress] = useState("");
-    const [editStars, setEditStars] = useState(3);
-    const [editPhoneNums, setEditPhoneNums] = useState([]);
-    const [editEmails, setEditEmails] = useState([]);
     const [editChainName, setEditChainName] = useState("");
 
     const openDialog = (rowID) => {
@@ -34,27 +30,20 @@ const ListHotelDatabase = () => {
         setDisplayDialog(false);
     }
 
-    const submitDialog = (newHotelid, newHotelName, newHoteladdress, newStars, newPhonenumbers, newContactemails, newChainname) => {
+    const submitDialog = (newOfficeid, newOfficeaddress, newChainname) => {
         try {
-            newHotelid = parseInt(newHotelid);
-            newStars = parseInt(newStars);
-            newPhonenumbers = newPhonenumbers.split(",");
-            newContactemails = newContactemails.split(",");
+            newOfficeid = parseInt(newOfficeid);
 
-            const hotelInfo = {
-                hotelid: newHotelid,
-                hotelname: newHotelName,
-                hoteladdress: newHoteladdress,
-                stars: newStars,
-                phonenumbers: newPhonenumbers,
-                contactemails: newContactemails,
+            const officeInfo = {
+                officeid: newOfficeid,
+                officeaddress: newOfficeaddress,
                 chainname: newChainname
             }
 
             if (typeOfEdit === "add") {
-                addHotel(hotelInfo);
+                addOffice(officeInfo);
             } else if (typeOfEdit === "edit") {
-                updateHotel(hotelInfo);
+                updateOffice(officeInfo);
             }
             setDisplayDialog(false);
             window.location.reload();
@@ -63,20 +52,20 @@ const ListHotelDatabase = () => {
         }
     }
 
-    const getHotels = async () => {
+    const getOffices = async () => {
         try {
-            const response = await fetch("http://localhost:8080/get-hotels");
+            const response = await fetch("http://localhost:8080/get-central-offices");
             const jsonData = await response.json();
 
-            setHotelData(jsonData)
+            setOfficeData(jsonData)
         } catch (err) {
             console.log(err.message);
         }
     }
 
-    const addHotel = async (data) => {
+    const addOffice = async (data) => {
         try {
-            const response = await fetch("http://localhost:8080/insert-hotels", {
+            const response = await fetch("http://localhost:8080/insert-centraloffices", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -86,16 +75,16 @@ const ListHotelDatabase = () => {
             const jsonData = await response.json();
 
             console.log(jsonData);
-            getHotels();
+            getOffices();
 
         } catch (err) {
             console.log(err.message);
         }
     }
 
-    const updateHotel = async (data) => {
+    const updateOffice = async (data) => {
         try {
-            const response = await fetch("http://localhost:8080/update-hotel", {
+            const response = await fetch("http://localhost:8080/update-centraloffice", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -105,16 +94,16 @@ const ListHotelDatabase = () => {
             const jsonData = await response.json();
 
             console.log(jsonData);
-            getHotels();
+            getOffices();
 
         } catch (err) {
             console.log(err.message);
         }
     }
 
-    const deleteHotel = async (data) => {
+    const deleteOffice = async (data) => {
         try {
-            const response = await fetch("http://localhost:8080/delete-hotel", {
+            const response = await fetch("http://localhost:8080/delete-centraloffice", {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json"
@@ -124,7 +113,7 @@ const ListHotelDatabase = () => {
             const jsonData = await response.json();
 
             console.log(jsonData);
-            getHotels();
+            getOffices();
 
         } catch (err) {
             console.log(err.message);
@@ -132,17 +121,13 @@ const ListHotelDatabase = () => {
     }
 
     useEffect(() => {
-        getHotels();
+        getOffices();
         setCurrentID(null);
-        setEditName("");
         setEditAddress("");
-        setEditStars(3);
-        setEditPhoneNums([]);
-        setEditEmails([]);
         setEditChainName("");
     }, []);
 
-    console.log(hotelData);
+    console.log(officeData);
 
     return (
         <>
@@ -157,32 +142,24 @@ const ListHotelDatabase = () => {
                 <thead>
                     <tr className="subtitle-text">
                         <th>ID</th>
-                        <th>Name</th>
                         <th>Address</th>
-                        <th>Stars</th>
-                        <th>Phone Numbers</th>
-                        <th>Contact Emails</th>
                         <th>Hotel Chain</th>
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {hotelData.map(hotel => (
+                    {officeData.map(centraloffice => (
                         <tr className="subtitle-text">
-                            <td>{hotel.hotelid}</td>
-                            <td>{hotel.hotelname}</td>
-                            <td>{hotel.hoteladdress}</td>
-                            <td>{hotel.stars}</td>
-                            <td>{hotel.phonenumbers.join(" ")}</td>
-                            <td>{hotel.contactemails.join(" ")}</td>
-                            <td>{hotel.chainname}</td>
+                            <td>{centraloffice.officeid}</td>
+                            <td>{centraloffice.officeaddress}</td>
+                            <td>{centraloffice.chainname}</td>
                             <td><Button
                                 variant="contained"
                                 color="success"
                                 onClick={() => {
                                     setTypeOfEdit("edit");
-                                    openDialog(hotel.hotelid);
+                                    openDialog(centraloffice.officeid);
                                 }}>
                                 Edit
                             </Button></td>
@@ -190,7 +167,7 @@ const ListHotelDatabase = () => {
                                 variant="contained"
                                 color="error"
                                 onClick={() => {
-                                    deleteHotel({ hotelid: hotel.hotelid });
+                                    deleteOffice({ officeid: centraloffice.officeid });
                                     window.location.reload();
                                 }}>
                                 Delete
@@ -200,22 +177,9 @@ const ListHotelDatabase = () => {
                 </tbody>
             </table>
             <Dialog open={displayDialog} onClose={closeDialog} fullWidth={true} maxWidth={"md"}>
-                <DialogTitle style={{ fontWeight: "bold" }}>Edit Hotel</DialogTitle>
+                <DialogTitle style={{ fontWeight: "bold" }}>Edit Central Office</DialogTitle>
                 <DialogContent>
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="name"
-                        label="Hotel Name"
-                        type="text"
-                        fullWidth
-                        variant="standard"
-                        value={editName}
-                        onChange={e => {
-                            setEditName(e.target.value)
-                        }}
-                    />
-                    <TextField
+                <TextField
                         autoFocus
                         margin="dense"
                         id="name"
@@ -228,46 +192,7 @@ const ListHotelDatabase = () => {
                             setEditAddress(e.target.value)
                         }}
                     />
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="name"
-                        label="Number of Stars"
-                        type="text"
-                        fullWidth
-                        variant="standard"
-                        value={editStars}
-                        onChange={e => {
-                            setEditStars(e.target.value)
-                        }}
-                    />
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="name"
-                        label="Phone Numbers (separated by commas)"
-                        type="text"
-                        fullWidth
-                        variant="standard"
-                        value={editPhoneNums}
-                        onChange={e => {
-                            setEditPhoneNums(e.target.value)
-                        }}
-                    />
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="name"
-                        label="Contact Emails (separated by commas)"
-                        type="text"
-                        fullWidth
-                        variant="standard"
-                        value={editEmails}
-                        onChange={e => {
-                            setEditEmails(e.target.value)
-                        }}
-                    />
-                    <TextField
+                <TextField
                         autoFocus
                         margin="dense"
                         id="name"
@@ -283,11 +208,11 @@ const ListHotelDatabase = () => {
                 </DialogContent>
                 <DialogActions>
                     <Button variant="contained" color="error" onClick={closeDialog}>Cancel</Button>
-                    <Button variant="contained" color="success" onClick={() => { submitDialog(currentID, editName, editAddress, editStars, editPhoneNums, editEmails, editChainName) }}>{typeOfEdit}</Button>
+                    <Button variant="contained" color="success" onClick={() => { submitDialog(currentID, editAddress, editChainName) }}>{typeOfEdit}</Button>
                 </DialogActions>
             </Dialog>
         </>
     )
 };
 
-export default ListHotelDatabase;
+export default ListCentralOfficeDatabase;

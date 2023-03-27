@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import './styles/globalStyles.css';
 import './styles/EmployeeDBPage.css';
 import ListHotelDatabase from "./components/ListHotelDatabase";
+import ListCentralOfficeDatabase from "./components/ListCentralOfficeDatabase";
+import ListPositionDatabase from "./components/ListPositionDatabase";
 
 import { Button } from "@mui/material";
 import SvgIcon from '@mui/material/SvgIcon';
@@ -67,7 +69,7 @@ function EmployeeDBPage() {
         if (selectedData === null) {
             return <p className="subtitle-text">Select data type above</p>
         } else if (selectedData === "centraloffice") {
-            return <p className="subtitle-text">{selectedData}</p>
+            return <ListCentralOfficeDatabase></ListCentralOfficeDatabase>
         } else if (selectedData === "customer") {
             return <p className="subtitle-text">{selectedData}</p>
         } else if (selectedData === "employee") {
@@ -77,7 +79,7 @@ function EmployeeDBPage() {
         } else if (selectedData === "hotelchain") {
             return <p className="subtitle-text">{selectedData}</p>
         } else if (selectedData === "position") {
-            return <p className="subtitle-text">{selectedData}</p>
+            return <ListPositionDatabase></ListPositionDatabase>
         } else if (selectedData === "room") {
             return <p className="subtitle-text">{selectedData}</p>
         }

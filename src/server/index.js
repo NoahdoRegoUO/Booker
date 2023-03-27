@@ -59,7 +59,7 @@ app.get("/get-bookings", async (req, res) => {
 app.get("/get-central-offices", async (req, res) => {
     try {
         await pool.query(setSchema);
-        const allCentralOffices = await pool.query("SELECT * FROM centraloffice");
+        const allCentralOffices = await pool.query("SELECT * FROM centraloffice ORDER BY officeid asc");
         res.json(allCentralOffices.rows);
     } catch (err) {
         console.error(err);
@@ -197,11 +197,16 @@ app.post("/insert-bookings", async (req, res) => {
 
 // Insert Central Office
 app.post("/insert-centraloffices", async (req, res) => {
-    const { officeid, officeaddress, chainname } = req.body;
+    const { officeaddress, chainname } = req.body;
+
+     // Get the highest current customerid
+    await pool.query(setSchema);
+    const highestOfficeID = await pool.query('SELECT MAX(officeid) FROM centraloffice');
+    const nextOfficeID = highestOfficeID.rows[0].max + 1;
 
     const query = {
         text: `INSERT INTO centraloffice(officeid, officeaddress, chainname) VALUES ($1, $2, $3)`,
-        values: [officeid, officeaddress, chainname],
+        values: [nextOfficeID, officeaddress, chainname],
     };
 
     try {
@@ -313,11 +318,19 @@ app.post('/insert-hotelchains', async (req, res) => {
 
 // Insert Positions
 app.post('insert-positions', async (req, res) => {
-    const { title, salary, employeeid } = req.body;
+    const {oldTitle, newTitle, salary, employeeid } = req.body;
 
     const query = {
         text: `INSERT INTO position(title, salary, employeeid) VALUES ($1, $2, $3)`,
-        values: [title, salary, employeeid]
+        values: [newTitle, salary, employeeid]
+    }
+
+    try {
+        await pool.query(setSchema);
+        await pool.query(query);
+        res.send('Position added successfully');
+    } catch (err) {
+        console.error(err);
     }
 });
 
@@ -807,12 +820,12 @@ app.post('/update-hotelchain', async (req, res) => {
 
 // Update Position
 app.post('/update-position', async (req, res) => {
-    const { title, salary, employeeid } = req.body;
+    const { oTitle, nTitle, salary, employeeid } = req.body;
     console.log(req.body);
 
     const query = {
-        text: `UPDATE position SET salary = $1, employeeid = $2 WHERE title = $3`,
-        values: [salary, employeeid, title],
+        text: `UPDATE position SET salary = $1, employeeid = $2, title = $3 WHERE title = $4`,
+        values: [salary, employeeid, nTitle, oTitle],
     };
 
     try {

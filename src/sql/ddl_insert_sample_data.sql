@@ -631,3 +631,10 @@ INSERT INTO employee(employeeid, sin, fullname, employeeaddress, age, hotelid) V
 INSERT INTO employee(employeeid, sin, fullname, employeeaddress, age, hotelid) VALUES (218, 690649497, 'Altha Tremblay', '3643 Myron Shores, Toronto, Ontario', 23, 44);
 INSERT INTO employee(employeeid, sin, fullname, employeeaddress, age, hotelid) VALUES (219, 139711549, 'Denver Windler', '2122 Stroman Harbor, Toronto, Ontario', 69, 44);
 INSERT INTO employee(employeeid, sin, fullname, employeeaddress, age, hotelid) VALUES (220, 607710809, 'Blossom Schimmel', '0355 Candida Vista, Toronto, Ontario', 66, 44);
+
+-- Commands for test position data
+INSERT INTO position(title, salary, employeeid)
+VALUES ('Manager', 80000.00, 1);
+
+INSERT INTO position(title, salary, employeeid)
+VALUES ('Front Desk', 40000.00, 2);
