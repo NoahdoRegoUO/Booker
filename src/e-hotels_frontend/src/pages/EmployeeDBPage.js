@@ -5,6 +5,7 @@ import './styles/EmployeeDBPage.css';
 import ListHotelDatabase from "./components/ListHotelDatabase";
 import ListCentralOfficeDatabase from "./components/ListCentralOfficeDatabase";
 import ListPositionDatabase from "./components/ListPositionDatabase";
+import ListCustomerDatabase from "./components/ListCustomerDatabase";
 
 import { Button } from "@mui/material";
 import SvgIcon from '@mui/material/SvgIcon';
@@ -71,7 +72,7 @@ function EmployeeDBPage() {
         } else if (selectedData === "centraloffice") {
             return <ListCentralOfficeDatabase></ListCentralOfficeDatabase>
         } else if (selectedData === "customer") {
-            return <p className="subtitle-text">{selectedData}</p>
+            return <ListCustomerDatabase></ListCustomerDatabase>
         } else if (selectedData === "employee") {
             return <p className="subtitle-text">{selectedData}</p>
         } else if (selectedData === "hotel") {
