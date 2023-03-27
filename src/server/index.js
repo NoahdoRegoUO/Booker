@@ -199,7 +199,7 @@ app.post("/insert-bookings", async (req, res) => {
 app.post("/insert-centraloffices", async (req, res) => {
     const { officeaddress, chainname } = req.body;
 
-     // Get the highest current customerid
+    // Get the highest current customerid
     await pool.query(setSchema);
     const highestOfficeID = await pool.query('SELECT MAX(officeid) FROM centraloffice');
     const nextOfficeID = highestOfficeID.rows[0].max + 1;
@@ -318,7 +318,7 @@ app.post('/insert-hotelchains', async (req, res) => {
 
 // Insert Positions
 app.post('insert-positions', async (req, res) => {
-    const {oldTitle, newTitle, salary, employeeid } = req.body;
+    const { newTitle, salary, employeeid } = req.body;
 
     const query = {
         text: `INSERT INTO position(title, salary, employeeid) VALUES ($1, $2, $3)`,

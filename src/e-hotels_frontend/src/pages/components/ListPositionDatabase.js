@@ -43,8 +43,14 @@ const ListPositionDatabase = () => {
                 employeeid: newEID
             }
 
+            const addPositionInfo = {
+                nTitle: newTitle,
+                salary: newSalary,
+                employeeid: newEID
+            }
+
             if (typeOfEdit === "add") {
-                addPosition(positionInfo);
+                addPosition(addPositionInfo);
             } else if (typeOfEdit === "edit") {
                 updatePosition(positionInfo);
             }
@@ -183,7 +189,7 @@ const ListPositionDatabase = () => {
             <Dialog open={displayDialog} onClose={closeDialog} fullWidth={true} maxWidth={"md"}>
                 <DialogTitle style={{ fontWeight: "bold" }}>Edit Position</DialogTitle>
                 <DialogContent>
-                <TextField
+                    <TextField
                         autoFocus
                         margin="dense"
                         id="name"
@@ -196,7 +202,7 @@ const ListPositionDatabase = () => {
                             setEditTitle(e.target.value)
                         }}
                     />
-                <TextField
+                    <TextField
                         autoFocus
                         margin="dense"
                         id="name"
@@ -209,7 +215,7 @@ const ListPositionDatabase = () => {
                             setEditSalary(e.target.value)
                         }}
                     />
-                <TextField
+                    <TextField
                         autoFocus
                         margin="dense"
                         id="name"
