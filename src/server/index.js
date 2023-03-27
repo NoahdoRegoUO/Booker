@@ -296,14 +296,14 @@ app.post('/insert-hotels', async (req, res) => {
 
 // Insert Hotel Chains
 app.post('/insert-hotelchains', async (req, res) => {
-    const { chainname, numberhotels, phonenumbers, contactemails } = req.body;
+    const { nChainName, numberhotels, phonenumbers, contactemails } = req.body;
 
     const pnArray = `{${phonenumbers.join(',')}}`;
     const ceArray = `{${contactemails.join(',')}}`;
 
     const query = {
         text: `INSERT INTO hotelchain(chainname, numberhotels, phonenumbers, contactemails) VALUES ($1, $2, $3, $4)`,
-        values: [chainname, numberhotels, pnArray, ceArray],
+        values: [nChainName, numberhotels, pnArray, ceArray],
     };
 
     try {
@@ -800,12 +800,12 @@ app.post('/update-hotel', async (req, res) => {
 
 // Update Hotel Chain
 app.post('/update-hotelchain', async (req, res) => {
-    const { chainname, numberhotels, phonenumbers, contactemails } = req.body;
+    const { oChainName, nChainName, phonenumbers, contactemails } = req.body;
     console.log(req.body);
 
     const query = {
-        text: `UPDATE hotelchain SET numberhotels = $1, phonenumbers = $2, contactemails = $3 WHERE chainname = $4`,
-        values: [numberhotels, phonenumbers, contactemails, chainname],
+        text: `UPDATE hotelchain SET chainname = $1, phonenumbers = $2, contactemails = $3 WHERE chainname = $4`,
+        values: [nChainName, phonenumbers, contactemails, oChainName],
     };
 
     try {

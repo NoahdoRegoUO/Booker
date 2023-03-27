@@ -12,6 +12,8 @@ import SvgIcon from '@mui/material/SvgIcon';
 import { grey } from "@mui/material/colors";
 import { useNavigate } from "react-router-dom";
 import Select from 'react-select';
+import ListEmployeeDatabase from "./components/ListEmployeeDatabase";
+import ListHotelChainDatabase from "./components/ListHotelChainDatabase";
 
 const HomeIcon = (props) => {
     return (
@@ -74,11 +76,11 @@ function EmployeeDBPage() {
         } else if (selectedData === "customer") {
             return <ListCustomerDatabase></ListCustomerDatabase>
         } else if (selectedData === "employee") {
-            return <p className="subtitle-text">{selectedData}</p>
+            return <ListEmployeeDatabase></ListEmployeeDatabase>
         } else if (selectedData === "hotel") {
             return <ListHotelDatabase></ListHotelDatabase>
         } else if (selectedData === "hotelchain") {
-            return <p className="subtitle-text">{selectedData}</p>
+            return <ListHotelChainDatabase></ListHotelChainDatabase>
         } else if (selectedData === "position") {
             return <ListPositionDatabase></ListPositionDatabase>
         } else if (selectedData === "room") {
