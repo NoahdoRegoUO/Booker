@@ -30,9 +30,6 @@ function Home() {
             <div className="button-style">
                 <Button variant="contained" color="primary" size="large" onClick={loadEmployeePage}>Employee</Button>
             </div>
-            <div className="button-style">
-                <Button variant="contained" color="primary" size="large" onClick={loadCustomerPage}>Create Test Table</Button>
-            </div>
             <div id="left-hotel-image-container">
                 <img src={hotel1Img} class="hotel-image" alt="Hotel 1" />
             </div>
