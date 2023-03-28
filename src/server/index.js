@@ -145,7 +145,7 @@ app.get("/get-rooms", async (req, res) => {
 
 // Insert Archive
 app.post("/insert-archives", async (req, res) => {
-    const { archivetype, startdate, enddate, specialrequests, hotelid, roomnumber, customerid } = req.body;
+    const { id, archivetype, startdate, enddate, specialrequests, hotelid, roomnumber, customerid } = req.body;
 
     // Get the highest current archiveid
     await pool.query(setSchema);
@@ -156,7 +156,7 @@ app.post("/insert-archives", async (req, res) => {
 
 
     const query = {
-        text: 'INSERT into archive(archiveid, archivetype, startdate, enddate, specialrequests, hotelid, roomnumber, customerid) VALUES ($1, $2, $3, $4, $5, $6, $7)',
+        text: 'INSERT into archive(archiveid, archivetype, startdate, enddate, specialrequests, hotelid, roomnumber, customerid) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
         values: [nextArchiveID, archivetype, startdate, enddate, srArray, hotelid, roomnumber, customerid],
     };
 
@@ -188,7 +188,7 @@ app.post("/insert-bookings", async (req, res) => {
     try {
         await pool.query(setSchema);
         await pool.query(query);
-        res.send(`Booking ${nextBookingId} added successfully`);
+        res.send(`Booking added successfully`);
 
     } catch (err) {
         console.error(err);
@@ -337,6 +337,52 @@ app.post('/insert-positions', async (req, res) => {
 // Insert Renting
 app.post("/insert-rentings", async (req, res) => {
     const { startdate, enddate, specialrequests, hotelid, roomnumber, customerid } = req.body;
+
+    // Get the highest current rentingid
+    const highestrentingid = await pool.query('SELECT MAX(rentingid) FROM renting');
+    const nextRentingID = highestrentingid.rows[0].max + 1;
+
+    const srArray = `{${specialrequests.join(',')}}`;
+
+    const query = {
+        text: `INSERT INTO renting(rentingid, startdate, enddate, specialrequests, hotelid, roomnumber, customerid) VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+        values: [nextRentingID, startdate, enddate, srArray, hotelid, roomnumber, customerid],
+    };
+
+    try {
+        await pool.query(setSchema);
+        await pool.query(query);
+        res.send(`Renting ${nextRentingID} added successfully`);
+
+    } catch (err) {
+        console.error(err);
+    }
+});
+
+
+// Insert Renting but From Booking
+app.post("/insert-renting-from-booking", async (req, res) => {
+    const {bookingid} = req.body;
+
+    console.log(bookingid);
+
+    await pool.query(setSchema);
+
+    const getQuery = {
+        text: `SELECT * FROM booking WHERE bookingid = $1`,
+        values: [bookingid],
+    };
+
+    const allBookings = await pool.query(getQuery);
+
+    console.log(allBookings.rows);
+
+    const startdate = Object.values(Object.values(Object.values(allBookings)[3])[0])[1];
+    const enddate = Object.values(Object.values(Object.values(allBookings)[3])[0])[2];
+    const specialrequests = Object.values(Object.values(Object.values(allBookings)[3])[0])[3];
+    const hotelid = Object.values(Object.values(Object.values(allBookings)[3])[0])[4];
+    const roomnumber = Object.values(Object.values(Object.values(allBookings)[3])[0])[5];
+    const customerid = Object.values(Object.values(Object.values(allBookings)[3])[0])[6];
 
     // Get the highest current rentingid
     const highestrentingid = await pool.query('SELECT MAX(rentingid) FROM renting');
