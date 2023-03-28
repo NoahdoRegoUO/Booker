@@ -638,3 +638,10 @@ VALUES ('Manager', 80000.00, 1);
 
 INSERT INTO position(title, salary, employeeid)
 VALUES ('Front Desk', 40000.00, 2);
+
+-- Commands for test customers
+INSERT INTO customer
+VALUES (1, 123123123, 'Deego Deego', '15 Noah Do St, Ottawa, Ontario', 23, TO_DATE('27/03/2023', 'DD/MM/YYYY'), 123111111);
+
+-- Commands for test bookings
+INSERT INTO booking VALUES (2, TO_DATE('27/03/2023', 'DD/MM/YYYY'), TO_DATE('28/03/2023', 'DD/MM/YYYY'), ARRAY['None'], 1, 1, 3);
