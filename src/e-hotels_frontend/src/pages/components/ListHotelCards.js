@@ -14,6 +14,7 @@ import Select from 'react-select';
 import '../styles/globalStyles.css';
 
 import hotelImg from "../images/hotel2.jpg"
+import RoomAvailabilityDialog from "./RoomAvailabilityDialog";
 
 const selectCustomStyles = {
     option: (defaultStyles) => ({
@@ -40,7 +41,7 @@ const selectCustomStyles = {
 
 const ListHotelCards = () => {
     const [hotelData, setHotelData] = useState([]);
-    const [displayDialog, setDisplayDialog] = useState(false);
+    const [displaySearchDialog, setDisplaySearchDialog] = useState(false);
 
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
@@ -48,6 +49,8 @@ const ListHotelCards = () => {
     const [roomCapacity, setRoomCapacity] = useState();
     const [roomView, setRoomView] = useState("");
     const [amenities, setAmenities] = useState([]);
+
+    const [roomData, setRoomData] = useState([]);
 
     const amenityOptions = [
         { value: 'ac', label: 'Air Conditioning' },
@@ -69,12 +72,12 @@ const ListHotelCards = () => {
         { value: 5, label: '5' },
     ]
 
-    const openDialog = () => {
-        setDisplayDialog(true);
+    const openSearchDialog = () => {
+        setDisplaySearchDialog(true);
     }
 
-    const closeDialog = () => {
-        setDisplayDialog(false);
+    const closeSearchDialog = () => {
+        setDisplaySearchDialog(false);
     }
 
     const handleAmenitySelect = e => {
@@ -87,6 +90,16 @@ const ListHotelCards = () => {
 
     const handleCapacitySelect = e => {
         setRoomCapacity(e.value);
+    }
+
+    const submitSearchDialog = () => {
+        const newRoomData = {
+            amenites: amenities,
+            roomView: roomView,
+            roomCapacity: roomCapacity
+        };
+        setRoomData([...roomData, newRoomData]);
+        setDisplaySearchDialog(false);
     }
 
     const getHotels = async () => {
@@ -122,12 +135,12 @@ const ListHotelCards = () => {
                             description={`Address: ${hotel.hoteladdress}`}
                             description2={`Stars: ${hotel.stars} `}
                             description3={`Hotel Chain: ${hotel.chainname}`}
-                            action={() => { openDialog() }}
+                            action={() => { openSearchDialog() }}
                         />
                     </Grid>
                 ))}
             </Grid>
-            <Dialog open={displayDialog} onClose={closeDialog} fullWidth={true} maxWidth={"lg"}>
+            <Dialog open={displaySearchDialog} onClose={closeSearchDialog} fullWidth={true} maxWidth={"lg"}>
                 <DialogTitle style={{ fontWeight: "bold" }}>Book a Room</DialogTitle>
                 <DialogContent>
                     <Select
@@ -196,13 +209,13 @@ const ListHotelCards = () => {
                             setSpecialRequests(e.target.value)
                         }}
                     />
-                    <p>Price</p>
                 </DialogContent>
                 <DialogActions>
-                    <Button variant="contained" color="error" onClick={closeDialog}>Cancel</Button>
-                    <Button variant="contained" color="success" onClick={() => { console.log("submitted") }}>Check Availability</Button>
+                    <Button variant="contained" color="error" onClick={closeSearchDialog}>Cancel</Button>
+                    <Button variant="contained" color="success" onClick={submitSearchDialog}>Check Availability</Button>
                 </DialogActions>
             </Dialog>
+            {roomData.map((filteredData) => (<RoomAvailabilityDialog roomData={filteredData} />))}
         </Box>
     )
 };
