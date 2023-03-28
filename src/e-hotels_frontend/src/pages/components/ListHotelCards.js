@@ -2,13 +2,92 @@ import React, { useEffect, useState } from "react";
 import Grid from '@mui/material/Grid';
 import Card from "./Card";
 import Box from "@mui/material/Box";
+import { Button } from "@mui/material";
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Select from 'react-select';
 
 import '../styles/globalStyles.css';
 
 import hotelImg from "../images/hotel2.jpg"
 
+const selectCustomStyles = {
+    option: (defaultStyles) => ({
+        ...defaultStyles,
+        color: "#1f1f1f",
+        backgroundColor: "#f2f2f2",
+        fontSize: "2vmin",
+    }),
+    control: (defaultStyles) => ({
+        ...defaultStyles,
+        color: "#1f1f1f",
+        backgroundColor: "#f2f2f2",
+        padding: "5px",
+        border: "none",
+        boxShadow: "none",
+        fontSize: "2vmin",
+    }),
+    singleValue: (defaultStyles) => ({
+        ...defaultStyles,
+        color: "#1f1f1f",
+        fontSize: "2vmin"
+    }),
+};
+
 const ListHotelCards = () => {
     const [hotelData, setHotelData] = useState([]);
+    const [displayDialog, setDisplayDialog] = useState(false);
+
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
+    const [specialRequests, setSpecialRequests] = useState("");
+    const [roomCapacity, setRoomCapacity] = useState();
+    const [roomView, setRoomView] = useState("");
+    const [amenities, setAmenities] = useState([]);
+
+    const amenityOptions = [
+        { value: 'ac', label: 'Air Conditioning' },
+        { value: 'tv', label: 'TV' },
+        { value: 'mw', label: 'Microwave' },
+        { value: 'fg', label: 'Fridge' }
+    ]
+
+    const viewOptions = [
+        { value: 'mountain', label: 'Mountain' },
+        { value: 'sea', label: 'Sea' },
+    ]
+
+    const capacityOptions = [
+        { value: 1, label: '1' },
+        { value: 2, label: '2' },
+        { value: 3, label: '3' },
+        { value: 4, label: '4' },
+        { value: 5, label: '5' },
+    ]
+
+    const openDialog = () => {
+        setDisplayDialog(true);
+    }
+
+    const closeDialog = () => {
+        setDisplayDialog(false);
+    }
+
+    const handleAmenitySelect = e => {
+        setAmenities(e.value);
+    };
+
+    const handleViewSelect = e => {
+        setRoomView(e.value);
+    }
+
+    const handleCapacitySelect = e => {
+        setRoomCapacity(e.value);
+    }
 
     const getHotels = async () => {
         try {
@@ -43,10 +122,87 @@ const ListHotelCards = () => {
                             description={`Address: ${hotel.hoteladdress}`}
                             description2={`Stars: ${hotel.stars} `}
                             description3={`Hotel Chain: ${hotel.chainname}`}
+                            action={() => { openDialog() }}
                         />
                     </Grid>
                 ))}
             </Grid>
+            <Dialog open={displayDialog} onClose={closeDialog} fullWidth={true} maxWidth={"lg"}>
+                <DialogTitle style={{ fontWeight: "bold" }}>Book a Room</DialogTitle>
+                <DialogContent>
+                    <Select
+                        id="select-dropdown"
+                        defaultValue={null}
+                        isMulti
+                        placeholder="Amenities"
+                        options={amenityOptions}
+                        onChange={handleAmenitySelect}
+                        styles={selectCustomStyles}
+                    />
+                    <Select
+                        id="select-dropdown"
+                        defaultValue={null}
+                        isMulti
+                        placeholder="Room View"
+                        options={viewOptions}
+                        onChange={handleViewSelect}
+                        styles={selectCustomStyles}
+                    />
+                    <Select
+                        id="select-dropdown"
+                        defaultValue={null}
+                        isMulti
+                        placeholder="Room Capacity"
+                        options={capacityOptions}
+                        onChange={handleViewSelect}
+                        styles={selectCustomStyles}
+                    />
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="name"
+                        label="Start Date (YYYY-MM-DD)"
+                        type="text"
+                        fullWidth
+                        variant="standard"
+                        value={startDate}
+                        onChange={e => {
+                            setStartDate(e.target.value)
+                        }}
+                    />
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="name"
+                        label="End Date (YYYY-MM-DD)"
+                        type="text"
+                        fullWidth
+                        variant="standard"
+                        value={endDate}
+                        onChange={e => {
+                            setEndDate(e.target.value)
+                        }}
+                    />
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="name"
+                        label="Special Requests"
+                        type="text"
+                        fullWidth
+                        variant="standard"
+                        value={specialRequests}
+                        onChange={e => {
+                            setSpecialRequests(e.target.value)
+                        }}
+                    />
+                    <p>Price</p>
+                </DialogContent>
+                <DialogActions>
+                    <Button variant="contained" color="error" onClick={closeDialog}>Cancel</Button>
+                    <Button variant="contained" color="success" onClick={() => { console.log("submitted") }}>Check Availability</Button>
+                </DialogActions>
+            </Dialog>
         </Box>
     )
 };
