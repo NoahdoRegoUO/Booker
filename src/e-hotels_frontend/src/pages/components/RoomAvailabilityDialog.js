@@ -8,10 +8,15 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 const RoomAvailabilityDialog = (roomData) => {
     const [displayRoomDialog, setDisplayRoomDialog] = useState();
+    const [displayBookedDialog, setDisplayBookedDialog] = useState();
     const [avaiableRooms, setAvailableRooms] = useState([]);
 
     const closeRoomDialog = () => {
         setDisplayRoomDialog(false);
+    }
+
+    const closeBookedDialog = () => {
+        setDisplayBookedDialog(false);
     }
 
     const getRooms = async () => {
@@ -40,8 +45,6 @@ const RoomAvailabilityDialog = (roomData) => {
                 customerid: 321,
             }
 
-            console.log(bookingInfo);
-
             const response = await fetch("http://localhost:8080/insert-bookings", {
                 method: "POST",
                 headers: {
@@ -50,12 +53,13 @@ const RoomAvailabilityDialog = (roomData) => {
                 body: JSON.stringify(bookingInfo)
             });
 
-            console.log(await response.json());
+            closeRoomDialog();
+
+            alert("Successfully booked a room!");
+
         } catch (err) {
             console.log(err.message);
         }
-
-        //closeRoomDialog();
     }
 
     const getAvailableRooms = async (data) => {
