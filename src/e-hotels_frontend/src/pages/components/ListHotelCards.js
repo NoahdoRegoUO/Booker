@@ -43,25 +43,27 @@ const ListHotelCards = () => {
     const [hotelData, setHotelData] = useState([]);
     const [displaySearchDialog, setDisplaySearchDialog] = useState(false);
 
+    const [hotelIndex, setHotelIndex] = useState();
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
     const [specialRequests, setSpecialRequests] = useState("");
-    const [roomCapacity, setRoomCapacity] = useState();
-    const [roomView, setRoomView] = useState("");
-    const [amenities, setAmenities] = useState([]);
+    const [roomCapacity, setRoomCapacity] = useState(null);
+    const [roomView, setRoomView] = useState(null);
+    const [roomAmenities, setRoomAmenities] = useState(null);
 
     const [roomData, setRoomData] = useState([]);
 
     const amenityOptions = [
-        { value: 'ac', label: 'Air Conditioning' },
-        { value: 'tv', label: 'TV' },
-        { value: 'mw', label: 'Microwave' },
-        { value: 'fg', label: 'Fridge' }
+        { value: 'Air Conditioning', label: 'Air Conditioning' },
+        { value: 'Television', label: 'TV' },
+        { value: 'Microwave', label: 'Microwave' },
+        { value: 'Fridge', label: 'Fridge' }
     ]
 
     const viewOptions = [
-        { value: 'mountain', label: 'Mountain' },
-        { value: 'sea', label: 'Sea' },
+        { value: 'Mountain', label: 'Mountain' },
+        { value: 'Sea', label: 'Sea' },
+        { value: null, label: 'Either' }
     ]
 
     const capacityOptions = [
@@ -72,31 +74,31 @@ const ListHotelCards = () => {
         { value: 5, label: '5' },
     ]
 
-    const openSearchDialog = () => {
+    const openSearchDialog = (index) => {
         setDisplaySearchDialog(true);
+        setHotelIndex(index);
+        localStorage.setItem("hotelIndex", index);
     }
 
     const closeSearchDialog = () => {
         setDisplaySearchDialog(false);
     }
 
-    const handleAmenitySelect = e => {
-        setAmenities(e.value);
-    };
-
-    const handleViewSelect = e => {
-        setRoomView(e.value);
-    }
-
-    const handleCapacitySelect = e => {
-        setRoomCapacity(e.value);
-    }
-
     const submitSearchDialog = () => {
+        const amenitiesArray = roomAmenities ? roomAmenities.map(amenityOptions => amenityOptions.value) : null;
+        const viewValue = roomView ? roomView.value : null;
+        const capacityValue = roomCapacity ? roomCapacity.value : null;
+
+        localStorage.setItem("bookingStartDate", startDate);
+        localStorage.setItem("bookingEndDate", endDate);
+        localStorage.setItem("bookingSpecialRequests", specialRequests);
+
         const newRoomData = {
-            amenites: amenities,
-            roomView: roomView,
-            roomCapacity: roomCapacity
+            occupied: false,
+            hotelid: hotelIndex,
+            amenities: amenitiesArray,
+            capacity: capacityValue,
+            view: viewValue,
         };
         setRoomData([...roomData, newRoomData]);
         setDisplaySearchDialog(false);
@@ -135,7 +137,7 @@ const ListHotelCards = () => {
                             description={`Address: ${hotel.hoteladdress}`}
                             description2={`Stars: ${hotel.stars} `}
                             description3={`Hotel Chain: ${hotel.chainname}`}
-                            action={() => { openSearchDialog() }}
+                            action={() => { openSearchDialog(hotel.hotelid) }}
                         />
                     </Grid>
                 ))}
@@ -149,25 +151,26 @@ const ListHotelCards = () => {
                         isMulti
                         placeholder="Amenities"
                         options={amenityOptions}
-                        onChange={handleAmenitySelect}
+                        value={roomAmenities}
+                        onChange={setRoomAmenities}
                         styles={selectCustomStyles}
                     />
                     <Select
                         id="select-dropdown"
                         defaultValue={null}
-                        isMulti
                         placeholder="Room View"
                         options={viewOptions}
-                        onChange={handleViewSelect}
+                        value={roomView}
+                        onChange={setRoomView}
                         styles={selectCustomStyles}
                     />
                     <Select
                         id="select-dropdown"
                         defaultValue={null}
-                        isMulti
                         placeholder="Room Capacity"
                         options={capacityOptions}
-                        onChange={handleViewSelect}
+                        value={roomCapacity}
+                        onChange={setRoomCapacity}
                         styles={selectCustomStyles}
                     />
                     <TextField

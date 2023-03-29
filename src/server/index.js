@@ -178,11 +178,9 @@ app.post("/insert-bookings", async (req, res) => {
     const highestbookingid = await pool.query('SELECT MAX(bookingid) FROM booking');
     const nextBookingID = highestbookingid.rows[0].max + 1;
 
-    const srArray = `{${specialrequests.join(',')}}`;
-
     const query = {
         text: `INSERT INTO booking(bookingid, startdate, enddate, specialrequests, hotelid, roomnumber, customerid) VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-        values: [nextBookingID, startdate, enddate, srArray, hotelid, roomnumber, customerid],
+        values: [nextBookingID, startdate, enddate, specialrequests, hotelid, roomnumber, customerid],
     };
 
     try {
@@ -362,7 +360,7 @@ app.post("/insert-rentings", async (req, res) => {
 
 // Insert Renting but From Booking
 app.post("/insert-renting-from-booking", async (req, res) => {
-    const {bookingid} = req.body;
+    const { bookingid } = req.body;
 
     console.log(bookingid);
 
@@ -432,7 +430,7 @@ app.post("/insert-rooms", async (req, res) => {
 });
 
 // Search Bookings
-app.get("/search-bookings", async (req, res) => {
+app.post("/search-bookings", async (req, res) => {
     let { startdate, enddate, specialrequests, hotelid, roomnumber, customerid } = req.query;
 
     let counter = 1;
@@ -487,8 +485,10 @@ app.get("/search-bookings", async (req, res) => {
 
 
 // Search Customers
-app.get("/search-customers", async (req, res) => {
+app.post("/search-customers", async (req, res) => {
     let { customerid, sin, fullname, customeraddress, age, registrationdate, creditcardnumber } = req.query;
+
+    console.log(req.query);
 
     let counter = 1;
 
@@ -551,7 +551,7 @@ app.get("/search-customers", async (req, res) => {
 })
 
 
-app.get("/search-employees", async (req, res) => {
+app.post("/search-employees", async (req, res) => {
     let { fullname, employeeaddress, age, hotelid } = req.query;
 
     // test search
@@ -617,7 +617,7 @@ app.get("/search-employees", async (req, res) => {
 
 
 // Search Hotels
-app.get("/search-hotels", async (req, res) => {
+app.post("/search-hotels", async (req, res) => {
     let { hotelname, hoteladdress, stars, phonenumbers, contactemails, chainname } = req.query;
 
     // test search
@@ -680,63 +680,80 @@ app.get("/search-hotels", async (req, res) => {
 })
 
 // Search Rooms
-app.get("/search-rooms", async (req, res) => {
-    let { roomnumber, price, occupied, amenities, extendable, view, issues, capacity, hotelid } = req.query;
+app.post("/search-rooms", async (req, res) => {
+    // params: { roomnumber, price, occupied, amenities, extendable, view, issues, capacity, hotelid }
+    let roomParams = req.body.roomData;
 
-    let query = {
-        text: "SELECT * FROM room WHERE occupied = false",
+    console.log(req.body);
+
+    let counter = 1;
+
+    let reqQuery = {
+        text: "SELECT * FROM room WHERE true",
         values: [],
     };
 
-    if (price) {
-        query.text += " AND price <= $" + counter.toString();
-        query.values.push(price);
+    if (roomParams.roomnumber) {
+        reqQuery.text += " AND roomnumber = $" + counter.toString();
+        reqQuery.values.push(roomParams.roomnumber);
         counter += 1;
     }
 
-    if (amenities && Array.isArray(amenities)) {
-        const amenitiesArray = `{${amenities.join(',')}}`;
-
-        query.text += ' AND amenities @> $' + counter.toString();
-        query.values.push(amenitiesArray);
+    if (roomParams.occupied != null) {
+        reqQuery.text += " AND occupied = $" + counter.toString();
+        reqQuery.values.push(roomParams.occupied);
         counter += 1;
     }
 
-    if (extendable) {
-        query.text += ' AND extendable = $' + counter.toString();
-        query.values.push(extendable === 'true');
+    if (roomParams.price && roomParams.price != null) {
+        reqQuery.text += " AND price <= $" + counter.toString();
+        reqQuery.values.push(roomParams.price);
         counter += 1;
     }
 
-    if (view) {
-        query.text += " AND view = $" + counter.toString();
-        query.values.push(view);
+    if (roomParams.amenities && Array.isArray(roomParams.amenities)) {
+        const amenitiesArray = `{${roomParams.amenities.join(',')}}`;
+
+        reqQuery.text += ' AND amenities @> $' + counter.toString();
+        reqQuery.values.push(amenitiesArray);
         counter += 1;
     }
 
-    if (issues) {
-        query.text += " AND issues = $" + counter.toString();
-        query.values.push(issues);
+    if (roomParams.extendable && roomParams.extendable != null) {
+        reqQuery.text += ' AND extendable = $' + counter.toString();
+        reqQuery.values.push(roomParams.extendable === 'true');
         counter += 1;
     }
 
-    if (capacity) {
-        query.text += " AND capacity >= $" + counter.toString();
-        query.values.push(capacity);
+    if (roomParams.view && roomParams.view != null) {
+        reqQuery.text += " AND view = $" + counter.toString();
+        reqQuery.values.push(roomParams.view);
         counter += 1;
     }
 
-    if (hotelid) {
-        query.text += " AND hotelid = $" + counter.toString();
-        query.values.push(hotelid);
+    if (roomParams.issues && roomParams.issues != null) {
+        reqQuery.text += " AND issues = $" + counter.toString();
+        reqQuery.values.push(roomParams.issues);
         counter += 1;
     }
 
-    console.log(query);
+    if (roomParams.capacity && roomParams.capacity != null) {
+        reqQuery.text += " AND capacity >= $" + counter.toString();
+        reqQuery.values.push(roomParams.capacity);
+        counter += 1;
+    }
+
+    if (roomParams.hotelid && roomParams.hotelid != null) {
+        reqQuery.text += " AND hotelid = $" + counter.toString();
+        reqQuery.values.push(roomParams.hotelid);
+        counter += 1;
+    }
+
+    console.log(reqQuery);
 
     try {
         await pool.query(setSchema);
-        const result = await pool.query(query);
+        const result = await pool.query(reqQuery);
         res.json(result.rows);
     } catch (err) {
         console.error(err);
