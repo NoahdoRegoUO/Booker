@@ -555,9 +555,9 @@ app.post("/search-employees", async (req, res) => {
     let { fullname, employeeaddress, age, hotelid } = req.query;
 
     // test search
-    employeeaddress = "Ottawa";
-    age = 44;
-    hotelid = 2;
+    // employeeaddress = "Ottawa";
+    // age = 44;
+    // hotelid = 2;
 
     let counter = 1;
 
@@ -621,9 +621,9 @@ app.post("/search-hotels", async (req, res) => {
     let { hotelname, hoteladdress, stars, phonenumbers, contactemails, chainname } = req.query;
 
     // test search
-    stars = 3;
+    // stars = 3;
     // chainname = "Adfaces";
-    hoteladdress = "Ottawa";
+    // hoteladdress = "Ottawa";
 
     let counter = 1;
 
@@ -1111,6 +1111,30 @@ app.delete('/delete-room', async (req, res) => {
         res.status(500).send('Something went wrong');
     }
 });
+
+// GET COMMANDS FOR SQL VIEWS
+
+// Get Available Rooms Per Area
+app.get("/get-available-rooms-per-area", async (req, res) => {
+    try {
+        await pool.query(setSchema);
+        const availableRooms = await pool.query("SELECT * FROM available_rooms_per_area ORDER BY num_available_rooms DESC");
+        res.json(availableRooms.rows);
+    } catch (err) {
+        console.error(err);
+    }
+})
+
+// Get Capacity of Rooms
+app.get("/get-room-capacity-by-hotel", async (req, res) => {
+    try {
+        await pool.query(setSchema);
+        const roomCapacity = await pool.query("SELECT * FROM room_capacity_by_hotel ORDER BY hotelid ASC");
+        res.json(roomCapacity.rows);
+    } catch (err) {
+        console.error(err);
+    }
+})
 
 app.listen(8080, () => {
     console.log("Server started on port 8080.");
