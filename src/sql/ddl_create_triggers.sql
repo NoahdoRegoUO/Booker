@@ -33,6 +33,10 @@ BEGIN
     AND hotelid = NEW.hotelid
     AND roomnumber = NEW.roomnumber
     AND customerid = NEW.customerid;
+
+    UPDATE room
+    SET occupied = true
+    WHERE roomnumber = NEW.roomnumber;
     RETURN NULL;
 END;
 $$ LANGUAGE plpgsql;
