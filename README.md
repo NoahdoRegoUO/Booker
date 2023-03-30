@@ -4,6 +4,10 @@
 
 Booker is a modern, hotel booking platform that suits all your needs! Customers have the ability to search hotels by location, stars, hotel chain and more to find the perfect place to book a room at. Employees can view and edit the database through our intuitive UI, and can also set bookings to rentings in 1 click.
 
+<img width="1384" alt="Home Screen" src="https://user-images.githubusercontent.com/90425027/228944008-fd21702a-c523-41d5-a188-04c81db08f72.png">
+<img width="1384" alt="Hotel Search Page" src="https://user-images.githubusercontent.com/90425027/228944230-5cc4af9d-5886-40c5-9a40-9abe20b3425a.png">
+<img width="1384" alt="Edit Database Page" src="https://user-images.githubusercontent.com/90425027/228944547-6a18b31d-908f-456e-8f59-ab5d0b988671.png">
+
 ## Details
 
 - _This is a university project built as a proof of concept_
