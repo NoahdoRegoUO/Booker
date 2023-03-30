@@ -401,6 +401,22 @@ app.post("/insert-renting-from-booking", async (req, res) => {
     } catch (err) {
         console.error(err);
     }
+
+    const highestarchiveid = await pool.query('SELECT MAX(archiveid) FROM archive');
+    const nextArchiveID = highestarchiveid.rows[0].max + 1;
+
+    const query2 = {
+        text: `INSERT INTO archive(archiveid, archivetype, startdate, enddate, specialrequests, hotelid, roomnumber, customerid) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+        values: [nextArchiveID, 'renting', startdate, enddate, srArray, hotelid, roomnumber, customerid],
+    };
+
+    try {
+        await pool.query(setSchema);
+        await pool.query(query2);
+
+    } catch (err) {
+        console.error(err);
+    }
 });
 
 // Insert Room

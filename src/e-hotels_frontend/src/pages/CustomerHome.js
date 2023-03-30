@@ -28,6 +28,7 @@ function CustomerHome() {
     const navigate = useNavigate();
     const [infoDisplay, setInfoDisplay] = useState(false);
     const [roomArea, setRoomArea] = useState([]);
+    const [roomCapacity, setRoomCapacity] = useState([]);
 
     const loadHomePage = () => {
         navigate("/")
@@ -52,9 +53,21 @@ function CustomerHome() {
         }
     }
 
+    const getRoomCapacityByHotel = async () => {
+        try {
+            const response = await fetch("http://localhost:8080/get-room-capacity-by-hotel");
+            const jsonData = await response.json();
+
+            setRoomCapacity(jsonData);
+        } catch (err) {
+            console.log(err.message);
+        }
+    }
+
     useEffect(() => {
         setInfoDisplay(false);
         getRoomsPerArea();
+        getRoomCapacityByHotel();
     }, []);
 
     return (
@@ -73,6 +86,10 @@ function CustomerHome() {
                 <DialogContent>
                     {roomArea.map((location) => (
                         <p style={{ fontWeight: "bold" }}>Total number of rooms in {location.city}: {location.num_available_rooms}</p>
+                    ))}
+                    <hr></hr>
+                    {roomCapacity.map((hotel) => (
+                        <p style={{ fontWeight: "bold" }}>{hotel.hotelname} (id = {hotel.hotelid}) has a total capacity of  {hotel.total_capacity}</p>
                     ))}
                 </DialogContent>
             </Dialog>

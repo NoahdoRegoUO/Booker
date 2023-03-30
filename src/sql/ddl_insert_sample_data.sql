@@ -643,5 +643,57 @@ VALUES ('Front Desk', 40000.00, 2);
 INSERT INTO customer
 VALUES (1, 123123123, 'Deego Deego', '15 Noah Do St, Ottawa, Ontario', 23, TO_DATE('27/03/2023', 'DD/MM/YYYY'), 123111111);
 
+INSERT INTO customer
+VALUES (2, 456123789, 'Marisha Mercer', '44 Lou Crescent, Toronto, Ontario', 26, TO_DATE('01/04/2023', 'DD/MM/YYYY'), 999112312);
+
+INSERT INTO customer
+VALUES (3, 456123784, 'Brennan Mercer', '55 Escape Avenue, Ottawa, Ontario', 34, TO_DATE('04/04/2023', 'DD/MM/YYYY'), 999111312);
+
+INSERT INTO customer
+VALUES (4, 456123783, 'Siobhan Axford', '2 House Rocks Road, Ottawa, Ontario', 21, TO_DATE('06/04/2023', 'DD/MM/YYYY'), 999113312);
+
+INSERT INTO customer
+VALUES (5, 456123782, 'Ally Wilson', '78 Fabain St, Toronto, Ontario', 39, TO_DATE('07/04/2023', 'DD/MM/YYYY'), 999162312);
+
 -- Commands for test bookings
-INSERT INTO booking VALUES (2, TO_DATE('27/03/2023', 'DD/MM/YYYY'), TO_DATE('28/03/2023', 'DD/MM/YYYY'), ARRAY['None'], 1, 1, 3);
+INSERT INTO booking VALUES (1, TO_DATE('27/04/2023', 'DD/MM/YYYY'), TO_DATE('28/04/2023', 'DD/MM/YYYY'), ARRAY['None'], 1, 1, 1);
+
+INSERT INTO booking VALUES (2, TO_DATE('29/05/2023', 'DD/MM/YYYY'), TO_DATE('30/05/2023', 'DD/MM/YYYY'), ARRAY['Pet Cat'], 2, 8, 2);
+
+INSERT INTO booking VALUES (3, TO_DATE('22/05/2023', 'DD/MM/YYYY'), TO_DATE('28/05/2023', 'DD/MM/YYYY'), ARRAY['None'], 3, 12, 3);
+
+INSERT INTO booking VALUES (4, TO_DATE('13/05/2023', 'DD/MM/YYYY'), TO_DATE('28/06/2023', 'DD/MM/YYYY'), ARRAY['None'], 4, 17, 4);
+
+INSERT INTO booking VALUES (5, TO_DATE('27/05/2023', 'DD/MM/YYYY'), TO_DATE('29/06/2023', 'DD/MM/YYYY'), ARRAY['None'], 5, 23, 5);
+
+-- Commands for test rentings
+INSERT INTO renting VALUES (1, TO_DATE('27/03/2023', 'DD/MM/YYYY'), TO_DATE('28/03/2023', 'DD/MM/YYYY'), ARRAY['None'], 1, 1, 1);
+
+INSERT INTO renting VALUES (2, TO_DATE('27/03/2023', 'DD/MM/YYYY'), TO_DATE('30/04/2023', 'DD/MM/YYYY'), ARRAY['Pet Cat'], 2, 7, 2);
+
+INSERT INTO renting VALUES (3, TO_DATE('27/03/2023', 'DD/MM/YYYY'), TO_DATE('28/04/2023', 'DD/MM/YYYY'), ARRAY['None'], 3, 11, 3);
+
+INSERT INTO renting VALUES (4, TO_DATE('27/03/2023', 'DD/MM/YYYY'), TO_DATE('28/04/2023', 'DD/MM/YYYY'), ARRAY['None'], 4, 16, 4);
+
+INSERT INTO renting VALUES (5, TO_DATE('27/03/2023', 'DD/MM/YYYY'), TO_DATE('29/04/2023', 'DD/MM/YYYY'), ARRAY['None'], 5, 22, 5);
+
+-- Archives for corresponding test bookings and rentings
+INSERT INTO archive VALUES (1, 'booking', TO_DATE('27/03/2023', 'DD/MM/YYYY'), TO_DATE('28/03/2023', 'DD/MM/YYYY'), ARRAY['None'], 1, 1, 1);
+
+INSERT INTO archive VALUES (2, 'booking', TO_DATE('29/04/2023', 'DD/MM/YYYY'), TO_DATE('30/04/2023', 'DD/MM/YYYY'), ARRAY['Pet Cat'], 2, 7, 2);
+
+INSERT INTO archive VALUES (3, 'booking', TO_DATE('22/04/2023', 'DD/MM/YYYY'), TO_DATE('28/04/2023', 'DD/MM/YYYY'), ARRAY['None'], 3, 11, 3);
+
+INSERT INTO archive VALUES (4, 'booking', TO_DATE('13/04/2023', 'DD/MM/YYYY'), TO_DATE('28/04/2023', 'DD/MM/YYYY'), ARRAY['None'], 4, 16, 4);
+
+INSERT INTO archive VALUES (5, 'booking', TO_DATE('27/04/2023', 'DD/MM/YYYY'), TO_DATE('29/04/2023', 'DD/MM/YYYY'), ARRAY['None'], 5, 22, 5);
+
+INSERT INTO archive VALUES (6, 'renting', TO_DATE('27/03/2023', 'DD/MM/YYYY'), TO_DATE('28/03/2023', 'DD/MM/YYYY'), ARRAY['None'], 1, 1, 1);
+
+INSERT INTO archive VALUES (7, 'renting', TO_DATE('27/03/2023', 'DD/MM/YYYY'), TO_DATE('30/04/2023', 'DD/MM/YYYY'), ARRAY['Pet Cat'], 2, 7, 2);
+
+INSERT INTO archive VALUES (8, 'renting', TO_DATE('27/03/2023', 'DD/MM/YYYY'), TO_DATE('28/04/2023', 'DD/MM/YYYY'), ARRAY['None'], 3, 11, 3);
+
+INSERT INTO archive VALUES (9, 'renting', TO_DATE('27/03/2023', 'DD/MM/YYYY'), TO_DATE('28/04/2023', 'DD/MM/YYYY'), ARRAY['None'], 4, 16, 4);
+
+INSERT INTO archive VALUES (10, 'renting', TO_DATE('27/03/2023', 'DD/MM/YYYY'), TO_DATE('29/04/2023', 'DD/MM/YYYY'), ARRAY['None'], 5, 22, 5);
