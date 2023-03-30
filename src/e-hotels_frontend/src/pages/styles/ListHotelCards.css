@@ -6,8 +6,10 @@
     border: 3px solid white;
     border-radius: 10px;
     margin-bottom: 20px;
-    justify-content: left;
+    justify-content: center;
     align-items: center;
+    margin-left: 7vmin;
+    margin-right: 7vmin;
 }
 
 #search-title {

@@ -618,12 +618,8 @@ app.post("/search-employees", async (req, res) => {
 
 // Search Hotels
 app.post("/search-hotels", async (req, res) => {
-    let { hotelname, hoteladdress, stars, phonenumbers, contactemails, chainname } = req.query;
-
-    // test search
-    // stars = 3;
-    // chainname = "Adfaces";
-    // hoteladdress = "Ottawa";
+    // params: { hotelname, hoteladdress, stars, phonenumbers, contactemails, chainname }
+    const hotelParams = req.body;
 
     let counter = 1;
 
@@ -632,39 +628,39 @@ app.post("/search-hotels", async (req, res) => {
         values: [],
     };
 
-    if (hotelname) {
+    if (hotelParams.hotelname && hotelParams.hotelname != null) {
         query.text += " WHERE hotelname = $" + counter.toString();
-        query.values.push(hotelname);
+        query.values.push(hotelParams.hotelname);
         counter += 1;
     }
 
-    if (hoteladdress) {
+    if (hotelParams.hoteladdress) {
         if (counter === 1) {
             query.text += " WHERE hoteladdress ILIKE $" + counter.toString();
         } else {
             query.text += " AND hoteladdress ILIKE $" + counter.toString();
         }
-        query.values.push('%' + hoteladdress + '%');
+        query.values.push('%' + hotelParams.hoteladdress + '%');
         counter += 1;
     }
 
-    if (stars) {
+    if (hotelParams.stars) {
         if (counter === 1) {
             query.text += " WHERE stars >= $" + counter.toString();
         } else {
             query.text += " AND stars >= $" + counter.toString();
         }
-        query.values.push(stars);
+        query.values.push(hotelParams.stars);
         counter += 1;
     }
 
-    if (chainname) {
+    if (hotelParams.chainname) {
         if (counter === 1) {
             query.text += " WHERE chainname = $" + counter.toString();
         } else {
             query.text += " AND chainname = $" + counter.toString();
         }
-        query.values.push(chainname);
+        query.values.push(hotelParams.chainname);
         counter += 1;
     }
 
