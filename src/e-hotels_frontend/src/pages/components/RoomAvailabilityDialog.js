@@ -42,7 +42,7 @@ const RoomAvailabilityDialog = (roomData) => {
                 specialrequests: specReqArray,
                 hotelid: localStorage.getItem("hotelIndex"),
                 roomnumber: roomNum,
-                customerid: 321,
+                customerid: 1,
             }
 
             const response = await fetch("http://localhost:8080/insert-bookings", {
