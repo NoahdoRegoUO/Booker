@@ -1,5 +1,7 @@
 # Booker
 
+Developed by [Noah do Régo](https://github.com/NoahdoRegoUO) and [Alex Clements](https://github.com/alexclements74)
+
 ## Description
 
 Booker is a modern, hotel booking platform that suits all your needs! Customers have the ability to search hotels by location, stars, hotel chain and more to find the perfect place to book a room at. Employees can view and edit the database through our intuitive UI, and can also set bookings to rentings in 1 click.
@@ -11,7 +13,6 @@ Booker is a modern, hotel booking platform that suits all your needs! Customers 
 ## Details
 
 - _This is a university project built as a proof of concept_
-- Developed by Noah do Régo and Alex Clements
 - Built with a PERN tech stack (Postgres, Express, React and Node.js)
 
 ## Installation
@@ -33,3 +34,6 @@ Booker is a modern, hotel booking platform that suits all your needs! Customers 
 - ddl_insert_sample_data.sql
 
 9. You should now be able to successfully run and use the web application! (use the commands from step 3-4 again)
+<ul>
+<li>Note you may encounter issues while attempting to run it at first based on the operating system and versions of the respectful applications/modules you have. In    our experience setting it up on different platforms, it only took a few minutes to fix the issues (if/when we had them) for the app to work.</li>
+</ul>
