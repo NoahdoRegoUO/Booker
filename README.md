@@ -35,5 +35,5 @@ Booker is a modern, hotel booking platform that suits all your needs! Customers 
 
 9. You should now be able to successfully run and use the web application! (use the commands from step 3-4 again)
 <ul>
-<li>a. Note you may encounter issues while attempting to run it at first based on the operating system and versions of the respectful applications/modules you have. In    our experience setting it up on different platforms, it only took a few minutes to fix the issues (if/when we had them) for the app to work.</li>
+<li>Note you may encounter issues while attempting to run it at first based on the operating system and versions of the respectful applications/modules you have. In    our experience setting it up on different platforms, it only took a few minutes to fix the issues (if/when we had them) for the app to work.</li>
 </ul>
