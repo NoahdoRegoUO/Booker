@@ -80,7 +80,7 @@ function EmployeePaymentPage() {
                     Home
                 </Button>
             </div>
-            <p className="title-text">Edit Database</p>
+            <p className="title-text">Handle Payments</p>
             <Select
                 id="select-dropdown"
                 defaultValue={null}
